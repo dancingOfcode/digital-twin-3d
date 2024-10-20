@@ -1,7 +1,7 @@
 {
-  "name": "test-cli",
+  "name": "digital-twin-3d",
   "version": "1.0.0",
-  "description": "",
+  "description": "vue3 + threejs 数字孪生项目",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,7 @@
     "web-fe-lint-scan": "web-fe-lint scan"
   },
   "keywords": [],
-  "author": "",
+  "author": "xu.zhengyou",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
