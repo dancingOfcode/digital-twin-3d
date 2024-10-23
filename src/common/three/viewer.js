@@ -12,6 +12,7 @@ import {
   Cache,
   Color,
 } from 'three'
+import { Tween, Easing } from '@tweenjs/tween.js';
 import { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer' // 三维标签渲染器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls' // 轨道控制器扩展库
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js' // 后处理器
@@ -35,6 +36,7 @@ export default class Viewer {
     this.mouseEvent = undefined
     this.css3DRenderer = undefined
     this.animateEventList = []
+    this.tweenAnimateEventList = []
     this.initViewer()
   }
 
@@ -100,9 +102,9 @@ export default class Viewer {
     const height = this.viewerDom.clientHeight
     // 更新
     this.controls.update()
-    this.camera.aspect = width / height // 摄像机视锥体的长宽比，通常是使用画布的宽/画布的高
+    this.camera.aspect = window.innerWidth / window.innerHeight // 摄像机视锥体的长宽比，通常是使用画布的宽/画布的高
     this.camera.updateProjectionMatrix() // 更新摄像机投影矩阵 在任何参数被改变以后必须被调用,来使得这些改变生效
-    this.renderer.setSize(width, height) // 设置渲染器的尺寸
+    this.renderer.setSize(window.innerWidth, window.innerHeight) // 设置渲染器的尺寸
     this.renderer.setPixelRatio(window.devicePixelRatio) // 设置渲染器的像素比
     this.css3DRenderer.setSize(width, height) // 设置标签渲染器的尺寸
   }
@@ -115,6 +117,9 @@ export default class Viewer {
     this.css3DRenderer.render(this.scene, this.camera) // 渲染3D标签场景
     if (this.composer) {
       this.composer.render()
+    }
+    if (this.tweenAnimateEventList) {
+      this.tweenAnimateEventList.map(animate => animate.update())
     }
   }
 
@@ -147,7 +152,7 @@ export default class Viewer {
       10000,
     )
     // 相机位置
-    this.camera.position.set(200, 0, 200)
+    this.camera.position.set(200, 200, 200)
     // 相机观看方向 坐标原点
     this.camera.lookAt(0, 0, 0)
   }
@@ -217,6 +222,34 @@ export default class Viewer {
         this.animateEventList.splice(i, 1)
       }
     })
+  }
+
+  /**
+* 添加TWEEN.js动画
+* @param {Object} coords 动画初始状态
+* @param {Object} end 动画终点状态
+* @param {Object} time 动画耗时
+* @param {Function} updateCallBack 动画更新回调
+*/
+  addTweenAnimate = (coords = { x: 0, y: 0, z: 0 }, end = { x: 0, y: 0, z: 0 }, time, updateCallBack) => {
+    let tweenAnimate = new Tween(coords, false) // Create a new tween that modifies 'coords'.
+      .to(end, time) // Move to (300, 200) in 1 second.
+      .easing(Easing.Quadratic.InOut) // Use an easing function to make the animation smooth.
+      .onUpdate(() => {
+        if (typeof updateCallBack === 'function') {
+          updateCallBack()
+        }
+      })
+      .start() // Start the tween immediately.
+    // TO:待去重
+    this.tweenAnimateEventList.push(tweenAnimate)
+  }
+
+  /**
+ * 移除TWEEN.js动画
+ */
+  removeTweenAnimate() {
+    this.tweenAnimateEventList = []
   }
 
   /**
