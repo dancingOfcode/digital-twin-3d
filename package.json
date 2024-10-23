@@ -1,0 +1,32 @@
+{
+  "name": "ilsp-web-3d",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --fix",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "husky": "8.0.3",
+    "pinia": "^2.2.4",
+    "three": "^0.169.0",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "^9.12.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/eslint-config-prettier": "^10.0.0",
+    "eslint": "^9.12.0",
+    "eslint-plugin-vue": "^9.29.0",
+    "prettier": "^3.3.3",
+    "vite": "^5.4.8"
+  }
+}
