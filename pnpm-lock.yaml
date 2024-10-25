@@ -11,9 +11,15 @@ importers:
       '@tweenjs/tween.js':
         specifier: ^18.6.4
         version: 18.6.4
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       husky:
         specifier: 8.0.3
         version: 8.0.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       pinia:
         specifier: ^2.2.4
         version: 2.2.4(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
@@ -626,6 +632,9 @@ packages:
   dargs@8.1.0:
     resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
     engines: {node: '>=12'}
+
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
@@ -1796,6 +1805,8 @@ snapshots:
   csstype@3.1.3: {}
 
   dargs@8.1.0: {}
+
+  dayjs@1.11.13: {}
 
   debug@4.3.7:
     dependencies:
