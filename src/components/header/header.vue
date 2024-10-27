@@ -24,12 +24,8 @@ setInterval(() => {
       <span>{{ dayWeek }}</span>
     </div>
     <div class="screen-wrap">
-      <div
-        class="screen-btn"
-        :class="isFullScreen ? 'exit-icon' : 'full-icon'"
-        @click="toggleFullScreen"
-      ></div>
-      <span>{{ isFullScreen ? '全屏' : '退出全屏' }}</span>
+      <div class="screen-btn" :class="isFullScreen ? 'exit-icon' : 'full-icon'" @click="toggleFullScreen"></div>
+      <span>{{ isFullScreen ? '退出全屏' : '全屏' }}</span>
     </div>
   </div>
 </template>
@@ -70,7 +66,7 @@ setInterval(() => {
 }
 
 .screen-btn {
-  width: 32px;
+  width: 30px;
   height: 24px;
 }
 
@@ -89,6 +85,7 @@ setInterval(() => {
   right: 24px;
   top: -6px;
 }
+
 .time-hms {
   margin: 0 16px;
   font-size: 24px;

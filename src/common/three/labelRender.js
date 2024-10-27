@@ -28,6 +28,8 @@ export default class LabelRender {
    */
   addCss2DLabel(html = '', color = '#fff', position = { x: 0, y: 0, z: 0 }) {
     const div = document.createElement('div')
+    div.style.fontSize = '14px'
+    div.style.color = '#fff'
     div.innerHTML = html
     const css2DLabel = new CSS2DObject(div) // HTML元素转化为threejs的CSS2模型对象
     css2DLabel.position.set(position)
@@ -45,22 +47,27 @@ export default class LabelRender {
     css2Renderer.domElement.style.left = '0px'
     css2Renderer.domElement.style.color = color
     css2Renderer.domElement.style.pointerEvents = 'none'
+    return css2DLabel
   }
 
   /**
    * 渲染3D标签 标签会跟着场景相机同步缩放
    * @param {String} html dom内容
    * @param {Object} position 标签渲染位置
+   * @param {String} fontSize 字体大小
    */
-  addCss3DLabel(html = '', position = { x: 0, y: 0, z: 0 }) {
+  addCss3DLabel(html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.pointerEvents = 'none'
+    div.style.fontSize = fontSize || '14px'
+    div.style.color = '#fff'
     div.innerHTML = html
     const css3DLabel = new CSS3DObject(div) // HTML元素转化为threejs的CSS3模型对象
-    css3DLabel.position.set(position)
+    css3DLabel.position.set(position.x, position.y, position.z)
     mesh.add(css3DLabel) // 标签tag作为mesh子对象，默认标注在模型局部坐标系坐标原点
     this.viewer.scene.add(mesh)
+    return css3DLabel
   }
 
   /**
@@ -72,10 +79,13 @@ export default class LabelRender {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.pointerEvents = 'none'
+    div.style.fontSize = '14px'
+    div.style.color = '#fff'
     div.innerHTML = html
     const css3DSprite = new CSS3DSprite(div) // HTML元素转化为threejs的CSS3精灵模型`CSS3DSprite`
     css3DSprite.position.set(position)
     mesh.add(css3DSprite) // 标签tag作为mesh子对象，默认标注在模型局部坐标系坐标原点
     this.viewer.scene.add(mesh)
+    return css3DSprite
   }
 }

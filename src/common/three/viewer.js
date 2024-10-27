@@ -7,6 +7,7 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
+  TextureLoader,
   AxesHelper,
   Vector2,
   Cache,
@@ -29,14 +30,16 @@ export default class Viewer {
     this.camera = undefined
     this.lights = undefined
     this.stats = undefined
+    this.texture = undefined
     this.statsObj = undefined
     this.controls = undefined
     this.renderer = undefined
     this.composer = undefined
+    this.uvOffset = undefined
     this.mouseEvent = undefined
     this.css3DRenderer = undefined
-    this.animateEventList = []
     this.tweenAnimateEventList = []
+    this.animateEventList = []
     this.initViewer()
   }
 
@@ -115,11 +118,17 @@ export default class Viewer {
   renderDom() {
     this.renderer.render(this.scene, this.camera) // 渲染场景
     this.css3DRenderer.render(this.scene, this.camera) // 渲染3D标签场景
+    // 后处理效果
     if (this.composer) {
       this.composer.render()
     }
+    // tweens 动画
     if (this.tweenAnimateEventList) {
       this.tweenAnimateEventList.map(animate => animate.update())
+    }
+    // uv纹理动画
+    if (this.texture && this.uvOffset) {
+      this.texture.offset.x += this.uvOffset; // 设置纹理动画：偏移量根据纹理和动画需要，设置合适的值
     }
   }
 
@@ -129,15 +138,6 @@ export default class Viewer {
   initScene() {
     this.scene = new Scene()
     this.scene.background = new Color('rgb(5,24,38)')
-  }
-
-  /**
-   * 添加灯光
-   */
-  initLight() {
-    if (!this.lights) {
-      this.lights = new Lights(this)
-    }
   }
 
   /**
@@ -152,9 +152,18 @@ export default class Viewer {
       10000,
     )
     // 相机位置
-    this.camera.position.set(200, 200, 200)
+    this.camera.position.set(500, 600, 500)
     // 相机观看方向 坐标原点
     this.camera.lookAt(0, 0, 0)
+  }
+
+  /**
+ * 添加灯光
+ */
+  initLight() {
+    if (!this.lights) {
+      this.lights = new Lights(this)
+    }
   }
 
   /**
@@ -304,6 +313,27 @@ export default class Viewer {
    * @description 移出后处理效果
    */
   removeComposer() {
-    this.composer = undefined
+    this.composer = null
+  }
+
+  /**
+   * @description 添加uv贴图
+   * @param {String} imgUrl  uv 贴图url
+   * @param {Number} offset  uv 纹理动画偏移量
+   * @returns {Object} 纹理对象
+   */
+  addTextureLoader(imgUrl, offset) {
+    const texLoader = new TextureLoader(); //纹理贴图加载器TextureLoader
+    this.texture = texLoader.load(imgUrl); // .load()方法加载图像，返回一个纹理对象Texture
+    // 是否渲染纹理动画
+    if (offset) this.uvOffset = offset
+    return this.texture
+  }
+
+  /**
+   * @description 清除纹理动画
+   */
+  removeUvAnimate() {
+    this.uvOffset = null
   }
 }
