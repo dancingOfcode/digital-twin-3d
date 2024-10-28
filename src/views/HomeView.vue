@@ -11,6 +11,7 @@ import ListenerMouseClick from '@/common/three/listenerMouseClick'
 import Header from '@/components/header/header.vue'
 import rightUrl from '../assets/images/rightArrow.png'
 import leftUrl from '../assets/images/leftArrow.png'
+import agvLogo from '../assets/images/agvLogo.png'
 
 onMounted(() => {
   initViewer()
@@ -36,6 +37,16 @@ const initViewer = () => {
   // let sky = new SkyBox(viewer)
   // sky.setSkybox('night')
 
+  // 添加一个移动盒子
+  const moveBox = new THREE.BoxGeometry(30, 30, 30)
+  const moveMaterial = new THREE.MeshBasicMaterial({
+    color: "#887776"
+  })
+  const moveMesh = new THREE.Mesh(moveBox, moveMaterial)
+  moveMesh.rotation.set(0, -Math.PI / 4, 0)
+  moveMesh.position.set(-179, 32, -226)
+  viewer.scene.add(moveMesh)
+
   // 添加一个辅助网格地面
   const gridHelper = new THREE.GridHelper(5000, 150, 0x004444, 0x004444)
   gridHelper.rotateY(Math.PI / 4) // 网格平行于z轴
@@ -47,60 +58,152 @@ const initViewer = () => {
     '/model/agv/AGV.obj',
     gltf => {
       console.log('gltf', gltf)
-      gltf.setScale(0.1)
-      gltf.scene.position.set(0, 15, 0)
+      gltf.setScale(0.05)
+      gltf.scene.position.set(-180, 15, -225)
+      gltf.scene.rotation.set(0, Math.PI / 4, 0)
 
       gltf.scene.traverse(function (obj) {
         if (obj.isMesh) {
           if (obj.name === 'Box244614') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: 'yellow',
+              color: '#fbfff2',
             })
           }
           if (obj.name === 'Box244615') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: '#62622f',
+              color: '#708090',
             })
           }
           if (obj.name === 'ChamferCyl5233') {
-            // 无效果
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: '#62622f',
+              color: '#4169e1',
             })
           }
           if (obj.name === 'ChamferCyl5234') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: '#ff622f',
+              color: '#dc143c',
             })
           }
           if (obj.name === 'ChamferCyl5235') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: 'green',
+              color: '#4169e1',
             })
           }
           if (obj.name === 'Cylinder274782') {
             // 无效果
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: 'blue',
+              color: '#000000',
             })
           }
           if (obj.name === 'Shape1134') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: '#dff',
+              color: '#00ced1',
             })
           }
           if (obj.name === 'Rectangle193599') {
             // 重新设置材质
             obj.material = new THREE.MeshBasicMaterial({
-              color: '#fff',
+              color: '#778899',
             })
+          }
+          if (obj.name === "Rectangle193589") {
+            // 重新设置材质
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#00ced1',
+            })
+          }
+          if (obj.name === "Rectangle193590") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193591") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193592") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#778899',
+            })
+          }
+          if (obj.name === "Rectangle193593") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193594") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193595") {
+            obj.material = new THREE.MeshBasicMaterial({
+              // color: '#00ced1',
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193596") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#dc143c',
+            })
+          }
+          if (obj.name === "Rectangle193597") {
+            obj.material = new THREE.MeshBasicMaterial({
+              // color: '#00ced1',
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Rectangle193598") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#000000',
+            })
+          }
+          if (obj.name === "Text060") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#dc143c',
+            })
+          }
+          // 叉子
+          if (obj.name === "Line74576") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#708090',
+            })
+            viewer.addTweenAnimate(
+              'Line74576',
+              obj.position,
+              { x: 0, y: -336, z: 0 },
+              3000,
+            )
+          }
+          if (obj.name === "Rectangle193600") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#708090',
+            })
+            viewer.addTweenAnimate(
+              'Line74576',
+              obj.position,
+              { x: 0, y: -336, z: 0 },
+              3000,
+            )
+          }
+          if (obj.name === "Rectangle193601") {
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#708090',
+            })
+            viewer.addTweenAnimate(
+              'Line74576',
+              obj.position,
+              { x: 0, y: -336, z: 0 },
+              3000,
+            )
           }
         }
       })
@@ -165,10 +268,6 @@ const initViewer = () => {
 
   //     const gltf4 = gltf2.cloneModel()
   //     gltf4.scene.position.set(-138, 0, 260)
-
-  //     gui.add(gltf4.scene.position, 'x', -5000, 5000).step(1)
-  //     gui.add(gltf4.scene.position, 'y', -5000, 5000).step(1)
-  //     gui.add(gltf4.scene.position, 'z', -5000, 5000).step(1)
   //   },
   //   process => {
   //     console.log('加载进度', Math.floor(process * 100) + '%')
@@ -450,7 +549,7 @@ const initViewer = () => {
   const textureGeomery2 = new THREE.PlaneGeometry(600, 15)
   const textureGeomery3 = new THREE.PlaneGeometry(80, 15)
   const textureGeomery4 = new THREE.PlaneGeometry(175, 15)
-  const textureGeomery5 = new THREE.PlaneGeometry(520, 15)
+  const textureGeomery5 = new THREE.PlaneGeometry(500, 15)
   const textureGeomery6 = new THREE.PlaneGeometry(120, 15)
   const textureMesh = new THREE.Mesh(textureGeomery1, textureMaterial1)
   const textureMesh2 = new THREE.Mesh(textureGeomery2, textureMaterial2)
@@ -467,8 +566,8 @@ const initViewer = () => {
   textureMesh.position.set(-203, 1, 56)
   textureMesh2.position.set(-75, 1, -230)
   textureMesh3.position.set(120, 1, -470)
-  textureMesh4.position.set(-320, 1, -115)
-  textureMesh5.position.set(-188, 1, 130)
+  textureMesh4.position.set(-286, 1, -102)
+  textureMesh5.position.set(-182, 1, 136)
   textureMesh6.position.set(36, 1, 280)
   viewer.scene.add(
     textureMesh,
@@ -478,10 +577,6 @@ const initViewer = () => {
     textureMesh5,
     textureMesh6,
   )
-
-  gui.add(textureMesh6.position, 'x', -5000, 5000).step(1)
-  gui.add(textureMesh6.position, 'y', -5000, 5000).step(1)
-  gui.add(textureMesh6.position, 'z', -5000, 5000).step(1)
 }
 
 // 动作模拟切换
