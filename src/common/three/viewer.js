@@ -8,12 +8,14 @@ import {
   PerspectiveCamera,
   WebGLRenderer,
   TextureLoader,
+  RepeatWrapping,
+  SRGBColorSpace,
   AxesHelper,
   Vector2,
   Cache,
   Color,
 } from 'three'
-import { Tween, Easing } from '@tweenjs/tween.js';
+import { Tween, Easing } from '@tweenjs/tween.js'
 import { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer' // 三维标签渲染器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls' // 轨道控制器扩展库
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js' // 后处理器
@@ -35,11 +37,11 @@ export default class Viewer {
     this.controls = undefined
     this.renderer = undefined
     this.composer = undefined
-    this.uvOffset = undefined
     this.mouseEvent = undefined
     this.css3DRenderer = undefined
-    this.tweenAnimateEventList = []
     this.animateEventList = []
+    this.tweenAnimateList = []
+    this.textureList = []
     this.initViewer()
   }
 
@@ -123,12 +125,15 @@ export default class Viewer {
       this.composer.render()
     }
     // tweens 动画
-    if (this.tweenAnimateEventList) {
-      this.tweenAnimateEventList.map(animate => animate.update())
+    if (this.tweenAnimateList.length) {
+      this.tweenAnimateList.map(obj => obj.tween.update())
     }
     // uv纹理动画
-    if (this.texture && this.uvOffset) {
-      this.texture.offset.x += this.uvOffset; // 设置纹理动画：偏移量根据纹理和动画需要，设置合适的值
+    if (this.textureList.length) {
+      this.textureList.map(
+        // 设置纹理动画：偏移量根据纹理和动画需要，设置合适的值
+        obj => obj.uvOffset && (obj.texture.offset.x += obj.uvOffset),
+      )
     }
   }
 
@@ -158,8 +163,8 @@ export default class Viewer {
   }
 
   /**
- * 添加灯光
- */
+   * 添加灯光
+   */
   initLight() {
     if (!this.lights) {
       this.lights = new Lights(this)
@@ -234,31 +239,43 @@ export default class Viewer {
   }
 
   /**
-* 添加TWEEN.js动画
-* @param {Object} coords 动画初始状态
-* @param {Object} end 动画终点状态
-* @param {Object} time 动画耗时
-* @param {Function} updateCallBack 动画更新回调
-*/
-  addTweenAnimate = (coords = { x: 0, y: 0, z: 0 }, end = { x: 0, y: 0, z: 0 }, time, updateCallBack) => {
+   * 添加TWEEN.js动画
+   * @param {String} tweenKey 动画唯一标识，用于tweenAnimateList移出动画
+   * @param {Object} coords 动画初始状态
+   * @param {Object} end 动画终点状态
+   * @param {Object} time 动画耗时
+   * @param {Function} updateCallBack 动画更新回调
+   */
+  addTweenAnimate = (
+    tweenKey,
+    coords = { x: 0, y: 0, z: 0 },
+    end = { x: 0, y: 0, z: 0 },
+    time,
+    updateCallBack,
+  ) => {
     let tweenAnimate = new Tween(coords, false) // Create a new tween that modifies 'coords'.
-      .to(end, time) // Move to (300, 200) in 1 second.
-      .easing(Easing.Quadratic.InOut) // Use an easing function to make the animation smooth.
+      .to(end, time)
+      .easing(Easing.Quadratic.InOut)
       .onUpdate(() => {
         if (typeof updateCallBack === 'function') {
           updateCallBack()
         }
       })
-      .start() // Start the tween immediately.
-    // TO:待去重
-    this.tweenAnimateEventList.push(tweenAnimate)
+      .start()
+    this.tweenAnimateList.push({
+      tweenKey,
+      tween: tweenAnimate,
+    })
   }
 
   /**
- * 移除TWEEN.js动画
- */
-  removeTweenAnimate() {
-    this.tweenAnimateEventList = []
+   * 移除TWEEN.js动画
+   * @param {String} tweenKeys TWEEN.js动画唯一标识
+   */
+  removeTweenAnimate(tweenKeys = []) {
+    this.tweenAnimateList = this.tweenAnimateList.filter(
+      item => !tweenKeys.includes(item.tweenKey),
+    )
   }
 
   /**
@@ -318,22 +335,33 @@ export default class Viewer {
 
   /**
    * @description 添加uv贴图
+   * @param {String} texttureKey  uv 贴图唯一标识
    * @param {String} imgUrl  uv 贴图url
-   * @param {Number} offset  uv 纹理动画偏移量
+   * @param {Number} uvOffset  uv 纹理动画偏移量
    * @returns {Object} 纹理对象
    */
-  addTextureLoader(imgUrl, offset) {
-    const texLoader = new TextureLoader(); //纹理贴图加载器TextureLoader
-    this.texture = texLoader.load(imgUrl); // .load()方法加载图像，返回一个纹理对象Texture
-    // 是否渲染纹理动画
-    if (offset) this.uvOffset = offset
-    return this.texture
+  addTextureLoader(texttureKey, imgUrl, uvOffset) {
+    const texLoader = new TextureLoader() //纹理贴图加载器TextureLoader
+    const texture = texLoader.load(imgUrl) // .load()方法加载图像，返回一个纹理对象Texture
+    texture.offset.x += 0.5 //纹理U方向偏移
+    // 设置.wrapS也就是U方向，纹理映射模式(包裹模式)
+    texture.wrapS = RepeatWrapping //对应offste.x偏移
+    texture.colorSpace = SRGBColorSpace //设置为SRGB颜色空间
+    this.textureList.push({
+      texture,
+      uvOffset, // 是否渲染纹理动画
+      texttureKey,
+    })
+    return texture
   }
 
   /**
    * @description 清除纹理动画
+   * @param {String} texttureKeys uv动画唯一标识
    */
-  removeUvAnimate() {
-    this.uvOffset = null
+  removeUvAnimate(texttureKeys = []) {
+    this.textureList = this.textureList.filter(
+      item => !texttureKeys.includes(item.texttureKey),
+    )
   }
 }
