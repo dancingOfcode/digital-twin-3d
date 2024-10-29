@@ -335,12 +335,12 @@ export default class Viewer {
 
   /**
    * @description 添加uv贴图
-   * @param {String} texttureKey  uv 贴图唯一标识
+   * @param {String} textureKey  uv 贴图唯一标识
    * @param {String} imgUrl  uv 贴图url
-   * @param {Number} uvOffset  uv 纹理动画偏移量
+   * @param {Number} uvOffset  uv 纹理动画偏移量 +:向右； -：向左
    * @returns {Object} 纹理对象
    */
-  addTextureLoader(texttureKey, imgUrl, uvOffset) {
+  addTextureLoader(textureKey, imgUrl, uvOffset) {
     const texLoader = new TextureLoader() //纹理贴图加载器TextureLoader
     const texture = texLoader.load(imgUrl) // .load()方法加载图像，返回一个纹理对象Texture
     texture.offset.x += 0.5 //纹理U方向偏移
@@ -350,7 +350,7 @@ export default class Viewer {
     this.textureList.push({
       texture,
       uvOffset, // 是否渲染纹理动画
-      texttureKey,
+      textureKey,
     })
     return texture
   }
@@ -361,7 +361,7 @@ export default class Viewer {
    */
   removeUvAnimate(texttureKeys = []) {
     this.textureList = this.textureList.filter(
-      item => !texttureKeys.includes(item.texttureKey),
+      item => !texttureKeys.includes(item.textureKey),
     )
   }
 }

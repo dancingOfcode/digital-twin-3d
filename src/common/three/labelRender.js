@@ -42,8 +42,9 @@ export default class LabelRender {
     this.viewer.viewerDom.appendChild(css2Renderer.domElement)
     // 属性设置
     css2Renderer.domElement.style.position = 'absolute'
-    css2Renderer.domElement.style.top = '0px'
-    css2Renderer.domElement.style.left = '0px'
+    css2Renderer.domElement.style.top = '50%'
+    css2Renderer.domElement.style.left = '50%'
+    css2Renderer.domElement.style.zIndex = 9999
     css2Renderer.domElement.style.pointerEvents = 'none'
     return css2DLabel
   }
@@ -57,8 +58,8 @@ export default class LabelRender {
   addCss3DLabel(html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
     const mesh = new Mesh()
     const div = document.createElement('div')
-    div.style.pointerEvents = 'none'
     div.style.fontSize = fontSize || '14px'
+    div.style.pointerEvents = 'none'
     div.style.color = '#fff'
     div.innerHTML = html
     const css3DLabel = new CSS3DObject(div) // HTML元素转化为threejs的CSS3模型对象
@@ -76,8 +77,8 @@ export default class LabelRender {
   addCss3DSprite(html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
     const mesh = new Mesh()
     const div = document.createElement('div')
-    div.style.pointerEvents = 'none'
     div.style.fontSize = fontSize || '14px'
+    div.style.pointerEvents = 'none'
     div.style.color = '#fff'
     div.innerHTML = html
     const css3DSprite = new CSS3DSprite(div) // HTML元素转化为threejs的CSS3精灵模型`CSS3DSprite`
