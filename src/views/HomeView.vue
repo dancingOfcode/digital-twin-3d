@@ -1,17 +1,16 @@
 <script setup>
 import * as THREE from 'three'
-import TWEEN from '@tweenjs/tween.js'
 import { onMounted } from 'vue'
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js' // 引入dat.gui.js的一个类GUI
-import SkyBox from '@/common/three/skyBox'
 import Viewer from '@/common/three/viewer'
 import ModelLoader from '@/common/three/modelLoader'
 import LabelRender from '@/common/three/labelRender'
-import ListenerMouseClick from '@/common/three/listenerMouseClick'
 import Header from '@/components/header/header.vue'
+import ListenerMouseClick from '@/common/three/listenerMouseClick'
+import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js' // 引入dat.gui.js的一个类GUI
+import { renderLabel } from '@/common/utils/utils'
+import { agvColorMap } from '@/common/utils/constant'
 import rightUrl from '../assets/images/rightArrow.png'
 import leftUrl from '../assets/images/leftArrow.png'
-import agvLogo from '../assets/images/agvLogo.png'
 
 onMounted(() => {
   initViewer()
@@ -24,23 +23,16 @@ const initViewer = () => {
   // 监听鼠标点击事件
   new ListenerMouseClick(viewer)
 
-  // 添加辅助坐标系
-  // viewer.addAxesHelper()
-
   // 添加性能监测
   viewer.addStats()
 
   // gui工具调试参数
   const gui = new GUI()
 
-  // 添加天空盒
-  // let sky = new SkyBox(viewer)
-  // sky.setSkybox('night')
-
   // 添加一个移动盒子
   const moveBox = new THREE.BoxGeometry(30, 30, 30)
   const moveMaterial = new THREE.MeshBasicMaterial({
-    color: "#887776"
+    color: '#887776',
   })
   const moveMesh = new THREE.Mesh(moveBox, moveMaterial)
   moveMesh.rotation.set(0, -Math.PI / 4, 0)
@@ -52,173 +44,37 @@ const initViewer = () => {
   gridHelper.rotateY(Math.PI / 4) // 网格平行于z轴
   viewer.scene.add(gridHelper)
 
-  // 添加agv小车
+  // 模型加载
   const modelLoader = new ModelLoader(viewer)
-  modelLoader.loadModelToScene(
-    '/model/agv/AGV.obj',
-    gltf => {
-      console.log('gltf', gltf)
-      gltf.setScale(0.05)
-      gltf.scene.position.set(-180, 15, -225)
-      gltf.scene.rotation.set(0, Math.PI / 4, 0)
 
-      gltf.scene.traverse(function (obj) {
-        if (obj.isMesh) {
-          if (obj.name === 'Box244614') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#fbfff2',
-            })
-          }
-          if (obj.name === 'Box244615') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#708090',
-            })
-          }
-          if (obj.name === 'ChamferCyl5233') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#4169e1',
-            })
-          }
-          if (obj.name === 'ChamferCyl5234') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#dc143c',
-            })
-          }
-          if (obj.name === 'ChamferCyl5235') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#4169e1',
-            })
-          }
-          if (obj.name === 'Cylinder274782') {
-            // 无效果
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === 'Shape1134') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#00ced1',
-            })
-          }
-          if (obj.name === 'Rectangle193599') {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#778899',
-            })
-          }
-          if (obj.name === "Rectangle193589") {
-            // 重新设置材质
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#00ced1',
-            })
-          }
-          if (obj.name === "Rectangle193590") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193591") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193592") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#778899',
-            })
-          }
-          if (obj.name === "Rectangle193593") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193594") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193595") {
-            obj.material = new THREE.MeshBasicMaterial({
-              // color: '#00ced1',
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193596") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#dc143c',
-            })
-          }
-          if (obj.name === "Rectangle193597") {
-            obj.material = new THREE.MeshBasicMaterial({
-              // color: '#00ced1',
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Rectangle193598") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#000000',
-            })
-          }
-          if (obj.name === "Text060") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#dc143c',
-            })
-          }
-          // 叉子
-          if (obj.name === "Line74576") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#708090',
-            })
-            viewer.addTweenAnimate(
-              'Line74576',
-              obj.position,
-              { x: 0, y: -336, z: 0 },
-              3000,
-            )
-          }
-          if (obj.name === "Rectangle193600") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#708090',
-            })
-            viewer.addTweenAnimate(
-              'Line74576',
-              obj.position,
-              { x: 0, y: -336, z: 0 },
-              3000,
-            )
-          }
-          if (obj.name === "Rectangle193601") {
-            obj.material = new THREE.MeshBasicMaterial({
-              color: '#708090',
-            })
-            viewer.addTweenAnimate(
-              'Line74576',
-              obj.position,
-              { x: 0, y: -336, z: 0 },
-              3000,
-            )
-          }
-        }
-      })
-
-      // viewer.addTweenAnimate(
-      //   'agv',
-      //   model.model.position,
-      //   { x: -800, y: 15, z: 0 },
-      //   10000,
-      // )
-    },
-    process => {
-      console.log('加载进度', Math.floor(process * 100) + '%')
-    },
-  )
+  // 添加agv小车
+  // modelLoader.loadModelToScene(
+  //   '/model/agv/AGV.obj',
+  //   gltf => {
+  //     gltf.setScale(0.05)
+  //     gltf.scene.position.set(-180, 15, -225)
+  //     gltf.scene.rotation.set(0, Math.PI / 4, 0)
+  //     // 处理模型颜色
+  //     gltf.scene.traverse(function (obj) {
+  //       if (obj.isMesh) {
+  //         if (agvColorMap[obj.name]) {
+  //           // 重新设置材质
+  //           obj.material = new THREE.MeshBasicMaterial({
+  //             color: agvColorMap[obj.name],
+  //           })
+  //         } else {
+  //           obj.material = new THREE.MeshBasicMaterial({
+  //             color: '#000000',
+  //           })
+  //         }
+  //         return
+  //       }
+  //     })
+  //   },
+  //   process => {
+  //     console.log('加载进度', Math.floor(process * 100) + '%')
+  //   },
+  // )
 
   // 加载货架
   // modelLoader.loadModelToScene(
@@ -235,7 +91,7 @@ const initViewer = () => {
   //             color: '#62658f',
   //           })
   //         } else {
-  //           // 重新设置材质
+  //           //  重新设置材质
   //           obj.material = new THREE.MeshBasicMaterial({
   //             color: '#887776',
   //           })
@@ -279,7 +135,7 @@ const initViewer = () => {
   //   '/model/glb/stackingTray.glb',
   //   gltf => {
   //     gltf.setScale(35, 100, 35)
-  //     gltf.scene.position.set(30, 0, 170)
+  //     gltf.scene.position.set(10, 0, 150)
   //     gltf.scene.rotation.set(0, -Math.PI / 4, 0)
   //     gltf.scene.traverse(function (obj) {
   //       if (obj.isMesh) {
@@ -290,9 +146,13 @@ const initViewer = () => {
   //       }
   //     })
 
+  //     gui.add(gltf.scene.position, 'x', -500, 500).step(1)
+  //     gui.add(gltf.scene.position, 'y', -500, 500).step(1)
+  //     gui.add(gltf.scene.position, 'z', -500, 500).step(1)
+
   //     const gltf2 = gltf.cloneModel()
   //     gltf2.setScale(35, 100, 35)
-  //     gltf2.setPosition(65, 0, 210)
+  //     gltf2.setPosition(45, 0, 190)
 
   //     const gltf3 = gltf.cloneModel()
   //     gltf3.setScale(20, 30, 20)
@@ -335,16 +195,31 @@ const initViewer = () => {
   //   },
   // )
 
+  // css3DLabel1.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
+  // css3DLabel2.rotation.set(-Math.PI / 2, 0, -Math.PI / 4)
+  let labelData = [
+    {
+      position: { x: 200, y: 0, z: 200 },
+      rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
+      html: `<div style="border:1px solid #fff; padding:8px;letter-spacing: 2px;">发料区</div>`,
+    },
+    {
+      position: { x: 55, y: 0, z: 125 },
+      rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
+      html: `<div style="letter-spacing: 5px;">WMS发料区</div>`,
+    },
+  ]
+  renderLabel('3DLabel', viewer, labelData)
   // 添加CSS3DLabel
   const labelRender = new LabelRender(viewer)
-  const css3DLabel1 = labelRender.addCss3DLabel(
-    '<div style="border:1px solid #fff; padding:8px;letter-spacing: 2px;">发料区</div>',
-    { x: 200, y: 0, z: 200 },
-  )
-  const css3DLabel2 = labelRender.addCss3DLabel(
-    '<div style="letter-spacing: 5px;">WMS发料区</div>',
-    { x: 55, y: 0, z: 125 },
-  )
+  // const css3DLabel1 = labelRender.addCss3DLabel(
+  //   '<div style="border:1px solid #fff; padding:8px;letter-spacing: 2px;">发料区</div>',
+  //   { x: 200, y: 0, z: 200 },
+  // )
+  // const css3DLabel2 = labelRender.addCss3DLabel(
+  //   '<div style="letter-spacing: 5px;">WMS发料区</div>',
+  //   { x: 55, y: 0, z: 125 },
+  // )
   const css3DLabel3 = labelRender.addCss3DLabel(
     '<div style="letter-spacing: 5px;">LES备料超市</div>',
     { x: 300, y: 0, z: -35 },
@@ -386,8 +261,8 @@ const initViewer = () => {
     { x: -450, y: 0, z: -186 },
     '26px',
   )
-  css3DLabel1.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
-  css3DLabel2.rotation.set(-Math.PI / 2, 0, -Math.PI / 4)
+  // css3DLabel1.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
+  // css3DLabel2.rotation.set(-Math.PI / 2, 0, -Math.PI / 4)
   css3DLabel3.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
   css3DLabel4.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
   css3DLabel5.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
