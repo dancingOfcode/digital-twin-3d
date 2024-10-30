@@ -104,7 +104,7 @@ export const squareData = [
       [141.421135, 0, 188.561842],
       [23.569455, 0, 306.413702],
       [-141.421437, 0, 141.421438],
-    ]
+    ],
   },
   {
     color: '#0b79ac',
@@ -113,7 +113,7 @@ export const squareData = [
       [400.693795, 0, -70.710638],
       [164.991509, 0, 164.991509],
       [-0.006058, 0, -0.00929],
-    ]
+    ],
   },
   {
     color: '#0b79ac',
@@ -122,7 +122,7 @@ export const squareData = [
       [-0.000365, 0, 329.983522],
       [-353.553362, 0, 683.58332],
       [-542.115175, 0, 494.974425],
-    ]
+    ],
   },
   {
     color: '#0b79ac',
@@ -131,7 +131,7 @@ export const squareData = [
       [141.420313, 0, -188.560763],
       [-141.421421, 0, 94.280426],
       [-188.561838, 0, 47.140482],
-    ]
+    ],
   },
   {
     color: '#0b79ac',
@@ -140,7 +140,7 @@ export const squareData = [
       [259.267222, 0, -306.418201],
       [164.991489, 0, -212.131989],
       [117.852037, 0, -259.273393],
-    ]
+    ],
   },
   {
     color: '#ffffff',
@@ -149,7 +149,7 @@ export const squareData = [
       [47.143278, 0, -424.259428],
       [-235.69033, 0, -141.413438],
       [-306.415125, 0, -212.129832],
-    ]
+    ],
   },
   {
     color: '#ffffff',
@@ -159,7 +159,7 @@ export const squareData = [
       [164.991521, 0, -542.115259],
       [70.711035, 0, -447.834636],
       [-0.000286, 0, -518.545245],
-    ]
+    ],
   },
 ]
 
@@ -172,7 +172,7 @@ export const textureData = [
     uvOffset: -0.05,
     repeat: { x: 10, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
-    position: { x: -203, y: 1, z: 56 }
+    position: { x: -203, y: 1, z: 56 },
   },
   {
     textureKey: 'rightLoad-2',
@@ -181,7 +181,7 @@ export const textureData = [
     uvOffset: -0.05,
     repeat: { x: 25, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
-    position: { x: -75, y: 1, z: -230 }
+    position: { x: -75, y: 1, z: -230 },
   },
   {
     textureKey: 'rightLoad-3',
@@ -190,7 +190,7 @@ export const textureData = [
     uvOffset: -0.05,
     repeat: { x: 5, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
-    position: { x: 120, y: 1, z: -470 }
+    position: { x: 120, y: 1, z: -470 },
   },
   {
     textureKey: 'leftLoad-1',
@@ -199,7 +199,7 @@ export const textureData = [
     uvOffset: 0.05,
     repeat: { x: 12, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
-    position: { x: -286, y: 1, z: -102 }
+    position: { x: -286, y: 1, z: -102 },
   },
   {
     textureKey: 'leftLoad-2',
@@ -208,7 +208,7 @@ export const textureData = [
     uvOffset: 0.05,
     repeat: { x: 25, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
-    position: { x: -182, y: 1, z: 136 }
+    position: { x: -182, y: 1, z: 136 },
   },
   {
     textureKey: 'leftLoad-3',
@@ -217,6 +217,32 @@ export const textureData = [
     uvOffset: 0.05,
     repeat: { x: 10, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: -(Math.PI * 3) / 4 },
-    position: { x: 36, y: 1, z: 280 }
+    position: { x: 36, y: 1, z: 280 },
   },
 ]
+
+// 细节动作模拟文本数据
+export const actionTextData = {
+  detailActions: [
+    '物料需求-MES排程计算',
+    '物料需求-ANOON拉动',
+    '下架-人工下架',
+    '下架-自动化立库下架',
+    '自动化库配送-LES配料超市',
+    '备料超市接收物料',
+    'AGV配送-物料直送',
+    'AGV配送-多点配送',
+    'AGV配送-跨楼层配送',
+    'AGV配送-自动化线',
+    'LES备料超市配送-自动化线',
+    'AGV配送-产线入库',
+    'LES备料超市配送-手动线',
+    '自动线返空',
+  ],
+  standardActions: [
+    '订单需求配送',
+    '产线间拉动配送',
+    '成平入库配送',
+    '备料区拉动配送',
+  ],
+}
