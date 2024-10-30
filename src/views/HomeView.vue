@@ -244,30 +244,20 @@ const actionChange = index => {
   <div class="screen-container">
     <div id="three-container"></div>
     <div class="menu-wrap">
-      <div
-        @click="currentTab = 'detailActions'"
-        :class="['menu-item', { active: currentTab === 'detailActions' }]"
-      >
+      <div @click="currentTab = 'detailActions'" :class="['menu-item', { active: currentTab === 'detailActions' }]">
         细节动作模拟
       </div>
-      <div
-        @click="currentTab = 'standardActions'"
-        :class="['menu-item', { active: currentTab === 'standardActions' }]"
-      >
+      <div @click="currentTab = 'standardActions'" :class="['menu-item', { active: currentTab === 'standardActions' }]">
         标准动作模拟
       </div>
     </div>
     <Header title="物流调度平台场景分析"></Header>
-    <ActionMenu
-      v-if="currentTab"
-      :tabName="currentTab"
-      @change="actionChange"
-    ></ActionMenu>
-    <ActionDetail
-      v-if="currentIndex"
-      :currentIndex="currentIndex"
-      @close-pop="currentIndex = 0"
-    ></ActionDetail>
+    <ActionMenu v-if="currentTab" :tabName="currentTab" @change="actionChange" @close-pop="() => {
+      currentTab = null
+      currentIndex = 0
+    }">
+    </ActionMenu>
+    <ActionDetail v-if="currentIndex" :currentIndex="currentIndex" @close-pop="currentIndex = 0"></ActionDetail>
   </div>
 </template>
 
@@ -298,13 +288,14 @@ const actionChange = index => {
   letter-spacing: 3px;
   margin-bottom: 16px;
   writing-mode: vertical-rl;
-  background: url('@/assets/images/tab_bg2.png') no-repeat;
+  background: url('@/assets/images/tab_bg.png') no-repeat;
   background-size: 100% 100%;
 }
 
 .menu-item:hover {
   color: #00b2df;
 }
+
 .active {
   color: #00b2df;
 }

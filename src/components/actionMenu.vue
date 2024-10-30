@@ -26,27 +26,48 @@ const itemClick = index => {
 }
 </script>
 <template>
-  <div class="detail-actions">
-    <div
-      v-for="(item, index) in actionTextData[currentTab]"
-      :key="index"
-      :class="['item', { 'active-item': currentIndex === index + 1 }]"
-      @click="itemClick(index + 1)"
-    >
-      <i> {{ (currentTab === 'detailActions' ? '1.' : '2.') + (index + 1) }}</i>
-      <span class="text">{{ item }}</span>
+  <div class="detail-actions-wrap">
+    <img alt="" class="close_icon" src="@/assets/images/close_icon.png" @click="$emit('closePop')" />
+    <div class="detail-actions">
+      <div v-for="(item, index) in actionTextData[currentTab]" :key="index"
+        :class="['item', { 'active-item': currentIndex === index + 1 }]" @click="itemClick(index + 1)">
+        <i> {{ (currentTab === 'detailActions' ? '1.' : '2.') + (index + 1) }}</i>
+        <span class="text">{{ item }}</span>
+      </div>
     </div>
   </div>
 </template>
 <style>
-.detail-actions {
+.detail-actions-wrap {
   position: absolute;
-  top: 200px;
+  top: 18vh;
   left: 78px;
+  width: 372px;
+  overflow: hidden;
+  max-height: 72vh;
+  min-height: 38vh;
+  padding: 42px 12px 12px;
+  background: url('@/assets/images/pop_bg.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+.close_icon {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.detail-actions {
   color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background-color: rgba(5, 24, 38, 0.6);
+  overflow-y: auto;
+  max-height: 68vh;
+}
+
+.detail-actions::-webkit-scrollbar {
+  width: 0;
 }
 
 .item {
@@ -63,13 +84,13 @@ const itemClick = index => {
 
 .item:hover {
   border-radius: 5px;
-  background: #051826;
-  border: 1px solid #00b2df;
+  background: #327672;
+  border: 1px solid #00fcee;
 }
 
 .active-item {
   border-radius: 5px;
-  background: #051826;
-  border: 1px solid #00b2df;
+  background: #327672;
+  border: 1px solid #00fcee;
 }
 </style>

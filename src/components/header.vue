@@ -43,7 +43,7 @@ setInterval(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('@/assets//images/header_bg2.png') no-repeat;
+  background: url('@/assets//images/header_bg.png') no-repeat;
   background-size: 100% 100%;
 }
 
