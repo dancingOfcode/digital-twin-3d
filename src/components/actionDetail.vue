@@ -17,7 +17,7 @@ const props = defineProps({
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .action-detail {
   position: absolute;
   right: 24px;

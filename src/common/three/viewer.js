@@ -5,6 +5,7 @@
  */
 import {
   Scene,
+  Object3D,
   PerspectiveCamera,
   WebGLRenderer,
   TextureLoader,
@@ -363,5 +364,23 @@ export default class Viewer {
     this.textureList = this.textureList.filter(
       item => !texttureKeys.includes(item.textureKey),
     )
+  }
+
+  /**
+ * @description 清除模型 
+ * @param { Array} modelNames 模型名称 
+ */
+  removeModel(modelNames = []) {
+    if (!modelNames.length) return
+    modelNames.forEach(name => {
+      let model = this.scene.getObjectByName(name)
+      console.log('model', model)
+      if (!model.isMesh) return
+      this.scene.remove(model);
+      model.geometry.dispose();
+      if (model.material) {
+        model.material.dispose();
+      }
+    });
   }
 }

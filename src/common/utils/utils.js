@@ -85,7 +85,34 @@ export const drawTexture = (viewer, textureData = []) => {
     const textureMesh = new THREE.Mesh(c_geomery, material)
     textureMesh.rotation.set(rotation.x || 0, rotation.y || 0, rotation.z || 0)
     textureMesh.position.set(position.x || 0, position.y || 0, position.z || 0)
+    textureMesh.name = textureKey
     viewer.scene.add(textureMesh)
   })
+}
 
+/**
+ * 绘制平面
+ * @param {Object} viewer 视图
+ * @param {Array} planeData {name, color, points, rotation, position} 平面数据
+ */
+export const drawPlane = (viewer, planeData) => {
+  if (!planeData.length) return
+  planeData.forEach(item => {
+    const { name, color, points, rotation, position } = item
+    let pointA = new THREE.Vector3(...points[0]);
+    let pointB = new THREE.Vector3(...points[1]);
+    let pointC = new THREE.Vector3(...points[2]);
+    // 使用distanceTo()方法计算两点之间的距离
+    let distanceAB = pointA.distanceTo(pointB).toFixed(6);
+    let distanceBC = pointB.distanceTo(pointC).toFixed(6);
+    let width = distanceAB > distanceBC ? distanceBC : distanceAB
+    let length = distanceAB > distanceBC ? distanceAB : distanceBC
+    const geometry = new THREE.PlaneGeometry(length, width);
+    const material = new THREE.MeshBasicMaterial({ color })
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.name = name // 增加模型唯一标识,方便模型操作
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z)
+    mesh.position.set(position.x, position.y, position.z)
+    viewer.scene.add(mesh)
+  });
 }

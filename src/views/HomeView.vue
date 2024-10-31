@@ -7,12 +7,13 @@ import ModelLoader from '@/common/three/modelLoader'
 import LabelRender from '@/common/three/labelRender'
 import ListenerMouseClick from '@/common/three/listenerMouseClick'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js' // 引入dat.gui.js的一个类GUI
-import { renderLabel, drawSquareArea, drawTexture } from '@/common/utils/utils'
+import { renderLabel, drawSquareArea, drawTexture, drawPlane } from '@/common/utils/utils'
 import {
   agvColorMap,
   labelData,
   squareData,
   textureData,
+  planeData
 } from '@/common/utils/constant'
 import ActionMenu from '@/components/actionMenu.vue'
 import ActionDetail from '@/components/actionDetail.vue'
@@ -36,7 +37,7 @@ const initViewer = () => {
   // viewer.addStats()
 
   // gui工具调试参数
-  // const gui = new GUI()
+  const gui = new GUI()
 
   // 添加CSS3DLabel
   const labelRender = new LabelRender(viewer)
@@ -47,6 +48,9 @@ const initViewer = () => {
 
   // 绘制agv小车路径
   drawTexture(viewer, textureData)
+
+  // 绘制平面
+  drawPlane(viewer, planeData)
 
   // 添加一个移动盒子
   const moveBox = new THREE.BoxGeometry(30, 30, 30)
@@ -96,123 +100,116 @@ const initViewer = () => {
   )
 
   // 加载货架
-  // modelLoader.loadModelToScene(
-  //   '/model/glb/goodsShelves.glb',
-  //   gltf => {
-  //     gltf.setScale(10, 12, 10)
-  //     gltf.scene.rotation.set(0, Math.PI / 4, 0)
-  //     gltf.scene.position.set(-372, 0, -300)
-  //     gltf.scene.traverse(function (obj) {
-  //       if (obj.isMesh) {
-  //         if (obj.name === 'Mesh_3ca768f6-0918-4d31-b980-7eb5f5f3c989012') {
-  //           // 重新设置材质
-  //           obj.material = new THREE.MeshBasicMaterial({
-  //             color: '#62658f',
-  //           })
-  //         } else {
-  //           //  重新设置材质
-  //           obj.material = new THREE.MeshBasicMaterial({
-  //             color: '#887776',
-  //           })
-  //         }
-  //       }
-  //     })
-
-  //     //  for (let i = 0; i < 15; i++) {
-  //     //    const cloneModel = gltf.cloneModel()
-  //     //    cloneModel.scene.position.set(-350 + i * 24, 0, -325 - i * 24)
-  //     //  }
-
-  //     const gltf2 = gltf.cloneModel()
-  //     gltf2.scene.rotation.set(0, (5 / 4) * Math.PI, 0)
-  //     gltf2.scene.position.set(-115, 0, 238)
-
-  //     gltf2.scene.traverse(function (obj) {
-  //       if (obj.isMesh) {
-  //         if (obj.name !== 'Mesh_3ca768f6-0918-4d31-b980-7eb5f5f3c989012') {
-  //           // 重新设置材质
-  //           obj.material = new THREE.MeshBasicMaterial({
-  //             color: '#04a1ed',
-  //           })
-  //         }
-  //       }
-  //     })
-
-  //     const gltf3 = gltf2.cloneModel()
-  //     gltf3.scene.position.set(-138, 0, 260)
-
-  //     const gltf4 = gltf2.cloneModel()
-  //     gltf4.scene.position.set(-138, 0, 260)
-  //   },
-  //   process => {
-  //     console.log('加载进度', Math.floor(process * 100) + '%')
-  //   },
-  // )
+  modelLoader.loadModelToScene(
+    '/model/glb/goodsShelves.glb',
+    gltf => {
+      gltf.setScale(10, 12, 10)
+      gltf.scene.rotation.set(0, Math.PI / 4, 0)
+      // 上、下架区货架
+      gltf.scene.position.set(-372, 0, -300)
+      gltf.scene.traverse(function (obj) {
+        if (obj.isMesh) {
+          if (obj.name === 'Mesh_3ca768f6-0918-4d31-b980-7eb5f5f3c989012') {
+            // 重新设置材质
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#62658f',
+            })
+          } else {
+            //  重新设置材质
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#e3cf57',
+            })
+          }
+        }
+      })
+      for (let i = 0; i < 9; i++) {
+        let cloneModel = gltf.cloneModel()
+        cloneModel.scene.position.set(-332 + i * 40, 0, -340 - i * 40)
+      }
+      // 仓储存贮区货架
+      const gltf2 = gltf.cloneModel()
+      gltf2.scene.rotation.set(0, (5 / 4) * Math.PI, 0)
+      gltf2.scene.position.set(-115, 0, 238)
+      gltf2.scene.traverse(function (obj) {
+        if (obj.isMesh) {
+          if (obj.name !== 'Mesh_3ca768f6-0918-4d31-b980-7eb5f5f3c989012') {
+            // 重新设置材质
+            obj.material = new THREE.MeshBasicMaterial({
+              color: '#04a1ed',
+            })
+          }
+        }
+      })
+      for (let i = 0; i < 9; i++) {
+        let cloneModel = gltf2.cloneModel()
+        cloneModel.scene.position.set(-152 - i * 36.5, 0, 275 + i * 36.5)
+      }
+    },
+    process => {
+      console.log('加载进度', Math.floor(process * 100) + '%')
+    },
+  )
 
   // 添加堆垛叠盘
-  // modelLoader.loadModelToScene(
-  //   '/model/glb/stackingTray.glb',
-  //   gltf => {
-  //     gltf.setScale(35, 100, 35)
-  //     gltf.scene.position.set(10, 0, 150)
-  //     gltf.scene.rotation.set(0, -Math.PI / 4, 0)
-  //     gltf.scene.traverse(function (obj) {
-  //       if (obj.isMesh) {
-  //         // 重新设置材质
-  //         obj.material = new THREE.MeshBasicMaterial({
-  //           color: '#04a1ed',
-  //         })
-  //       }
-  //     })
+  modelLoader.loadModelToScene(
+    '/model/glb/stackingTray.glb',
+    gltf => {
+      gltf.setScale(35, 100, 35)
+      gltf.scene.position.set(10, 0, 150)
+      gltf.scene.rotation.set(0, -Math.PI / 4, 0)
+      gltf.scene.traverse(function (obj) {
+        if (obj.isMesh) {
+          // 重新设置材质
+          obj.material = new THREE.MeshBasicMaterial({
+            color: '#04a1ed',
+          })
+        }
+      })
 
-  //     gui.add(gltf.scene.position, 'x', -500, 500).step(1)
-  //     gui.add(gltf.scene.position, 'y', -500, 500).step(1)
-  //     gui.add(gltf.scene.position, 'z', -500, 500).step(1)
+      const gltf2 = gltf.cloneModel()
+      gltf2.setScale(35, 100, 35)
+      gltf2.setPosition(45, 0, 190)
 
-  //     const gltf2 = gltf.cloneModel()
-  //     gltf2.setScale(35, 100, 35)
-  //     gltf2.setPosition(45, 0, 190)
+      const gltf3 = gltf.cloneModel()
+      gltf3.setScale(20, 30, 20)
+      gltf3.scene.position.set(-140, 0, 50)
 
-  //     const gltf3 = gltf.cloneModel()
-  //     gltf3.setScale(20, 30, 20)
-  //     gltf3.scene.position.set(-140, 0, 50)
+      const gltf4 = gltf.cloneModel()
+      gltf4.setScale(20, 30, 20)
+      gltf4.scene.position.set(-115, 0, 25)
 
-  //     const gltf4 = gltf.cloneModel()
-  //     gltf4.setScale(20, 30, 20)
-  //     gltf4.scene.position.set(-115, 0, 25)
+      const gltf5 = gltf.cloneModel()
+      gltf5.setScale(20, 30, 20)
+      gltf5.scene.position.set(-92, 0, 2)
 
-  //     const gltf5 = gltf.cloneModel()
-  //     gltf5.setScale(20, 30, 20)
-  //     gltf5.scene.position.set(-92, 0, 2)
+      const gltf6 = gltf.cloneModel()
+      gltf6.setScale(20, 30, 20)
+      gltf6.scene.position.set(-68, 0, -20)
 
-  //     const gltf6 = gltf.cloneModel()
-  //     gltf6.setScale(20, 30, 20)
-  //     gltf6.scene.position.set(-68, 0, -20)
+      const gltf7 = gltf.cloneModel()
+      gltf7.setScale(20, 30, 20)
+      gltf7.scene.position.set(-42, 0, -42)
 
-  //     const gltf7 = gltf.cloneModel()
-  //     gltf7.setScale(20, 30, 20)
-  //     gltf7.scene.position.set(-42, 0, -42)
+      const gltf8 = gltf.cloneModel()
+      gltf8.setScale(20, 30, 20)
+      gltf8.scene.position.set(-18, 0, -65)
 
-  //     const gltf8 = gltf.cloneModel()
-  //     gltf8.setScale(20, 30, 20)
-  //     gltf8.scene.position.set(-18, 0, -65)
-
-  //     const gltf9 = gltf.cloneModel()
-  //     gltf9.setScale(20, 30, 20)
-  //     gltf9.scene.position.set(225, 0, -315)
-  //     gltf9.scene.traverse(function (obj) {
-  //       if (obj.isMesh) {
-  //         // 重新设置材质
-  //         obj.material = new THREE.MeshBasicMaterial({
-  //           color: '#3e6d7a',
-  //         })
-  //       }
-  //     })
-  //   },
-  //   process => {
-  //     console.log('加载进度', Math.floor(process * 100) + '%')
-  //   },
-  // )
+      const gltf9 = gltf.cloneModel()
+      gltf9.setScale(20, 30, 20)
+      gltf9.scene.position.set(225, 0, -315)
+      gltf9.scene.traverse(function (obj) {
+        if (obj.isMesh) {
+          // 重新设置材质
+          obj.material = new THREE.MeshBasicMaterial({
+            color: '#3e6d7a',
+          })
+        }
+      })
+    },
+    process => {
+      console.log('加载进度', Math.floor(process * 100) + '%')
+    },
+  )
 
   // 批量创建多个长方体表示物料
   const group1 = new THREE.Group()
@@ -244,37 +241,21 @@ const actionChange = index => {
   <div class="screen-container">
     <div id="three-container"></div>
     <div class="menu-wrap">
-      <div
-        @click="currentTab = 'detailActions'"
-        :class="['menu-item', { active: currentTab === 'detailActions' }]"
-      >
+      <div @click="currentTab = 'detailActions'" :class="['menu-item', { active: currentTab === 'detailActions' }]">
         细节动作模拟
       </div>
-      <div
-        @click="currentTab = 'standardActions'"
-        :class="['menu-item', { active: currentTab === 'standardActions' }]"
-      >
+      <div @click="currentTab = 'standardActions'" :class="['menu-item', { active: currentTab === 'standardActions' }]">
         标准动作模拟
       </div>
     </div>
     <Header title="物流调度平台场景分析"></Header>
-    <ActionMenu
-      v-if="currentTab"
-      :tabName="currentTab"
-      @change="actionChange"
-      @close-pop="
-        () => {
-          currentTab = null
-          currentIndex = 0
-        }
-      "
-    >
+    <ActionMenu v-if="currentTab" :tabName="currentTab" @change="actionChange" @close-pop="() => {
+      currentTab = null
+      currentIndex = 0
+    }
+      ">
     </ActionMenu>
-    <ActionDetail
-      v-if="currentIndex"
-      :currentIndex="currentIndex"
-      @close-pop="currentIndex = 0"
-    ></ActionDetail>
+    <ActionDetail v-if="currentIndex" :currentIndex="currentIndex" @close-pop="currentIndex = 0"></ActionDetail>
   </div>
 </template>
 

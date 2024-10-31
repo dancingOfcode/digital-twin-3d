@@ -690,3 +690,21 @@ export const actionDetailData = {
     ]
   },
 }
+
+// 平面数据
+export const planeData = [
+  {
+    name: '二楼横面',
+    color: '#808080',
+    position: { x: -518, y: 135, z: 212 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
+    points: [[-707.107282, 0, 235.702333], [-400.693769, 0, 23.570298], [-329.983243, 0, 94.280824]]
+  },
+  {
+    name: '二楼竖面',
+    color: '#808080',
+    position: { x: -483, y: 135, z: 460 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
+    points: [[-353.529808, 0, 683.559743], [-235.697904, 0, 565.712247], [-612.825803, 0, 235.702333]]
+  },
+]

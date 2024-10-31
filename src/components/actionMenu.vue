@@ -37,7 +37,7 @@ const itemClick = index => {
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .detail-actions-wrap {
   position: absolute;
   top: 18vh;
