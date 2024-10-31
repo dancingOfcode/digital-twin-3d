@@ -118,10 +118,10 @@ const initViewer = () => {
   //       }
   //     })
 
-  //     for (let i = 0; i < 15; i++) {
-  //       const cloneModel = gltf.cloneModel()
-  //       cloneModel.scene.position.set(-350 + i * 24, 0, -325 - i * 24)
-  //     }
+  //     //  for (let i = 0; i < 15; i++) {
+  //     //    const cloneModel = gltf.cloneModel()
+  //     //    cloneModel.scene.position.set(-350 + i * 24, 0, -325 - i * 24)
+  //     //  }
 
   //     const gltf2 = gltf.cloneModel()
   //     gltf2.scene.rotation.set(0, (5 / 4) * Math.PI, 0)
@@ -132,7 +132,7 @@ const initViewer = () => {
   //         if (obj.name !== 'Mesh_3ca768f6-0918-4d31-b980-7eb5f5f3c989012') {
   //           // 重新设置材质
   //           obj.material = new THREE.MeshBasicMaterial({
-  //             color: '#c8c628',
+  //             color: '#04a1ed',
   //           })
   //         }
   //       }
@@ -160,7 +160,7 @@ const initViewer = () => {
   //       if (obj.isMesh) {
   //         // 重新设置材质
   //         obj.material = new THREE.MeshBasicMaterial({
-  //           color: '#80aba6',
+  //           color: '#04a1ed',
   //         })
   //       }
   //     })
@@ -244,20 +244,37 @@ const actionChange = index => {
   <div class="screen-container">
     <div id="three-container"></div>
     <div class="menu-wrap">
-      <div @click="currentTab = 'detailActions'" :class="['menu-item', { active: currentTab === 'detailActions' }]">
+      <div
+        @click="currentTab = 'detailActions'"
+        :class="['menu-item', { active: currentTab === 'detailActions' }]"
+      >
         细节动作模拟
       </div>
-      <div @click="currentTab = 'standardActions'" :class="['menu-item', { active: currentTab === 'standardActions' }]">
+      <div
+        @click="currentTab = 'standardActions'"
+        :class="['menu-item', { active: currentTab === 'standardActions' }]"
+      >
         标准动作模拟
       </div>
     </div>
     <Header title="物流调度平台场景分析"></Header>
-    <ActionMenu v-if="currentTab" :tabName="currentTab" @change="actionChange" @close-pop="() => {
-      currentTab = null
-      currentIndex = 0
-    }">
+    <ActionMenu
+      v-if="currentTab"
+      :tabName="currentTab"
+      @change="actionChange"
+      @close-pop="
+        () => {
+          currentTab = null
+          currentIndex = 0
+        }
+      "
+    >
     </ActionMenu>
-    <ActionDetail v-if="currentIndex" :currentIndex="currentIndex" @close-pop="currentIndex = 0"></ActionDetail>
+    <ActionDetail
+      v-if="currentIndex"
+      :currentIndex="currentIndex"
+      @close-pop="currentIndex = 0"
+    ></ActionDetail>
   </div>
 </template>
 
