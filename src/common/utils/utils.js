@@ -6,9 +6,7 @@ import LabelRender from '@/common/three/labelRender'
  * @param {String} type 标签类型
  * @param {Object} viewer 视图
  * @param {Object} labelData 标签信息列表
- * @param {String} html HTML内容
- * @param {Object} position 位置信息
- * @param {Object} rotation:{html: '',fontSize: '14px', position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 }} 旋转参数
+ * @param {Object} labelData:{name:'', html: '',fontSize: '14px', position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 }}
  */
 export const renderLabel = (type, viewer, labelData = []) => {
   let labelRender = new LabelRender(viewer)
@@ -16,16 +14,16 @@ export const renderLabel = (type, viewer, labelData = []) => {
   // 2DLabel
   if (type === '2DLabel') {
     labelData.map(item => {
-      const { html, fontSize = '14px', position, } = item
-      labelRender.addCss2DLabel(html, position, fontSize)
+      const { html, fontSize = '14px', position, name } = item
+      labelRender.addCss2DLabel(name, html, position, fontSize)
       return
     })
   }
   // 3DLabel
   if (type === '3DLabel') {
     labelData.map(item => {
-      const { html, fontSize = '14px', position, rotation } = item
-      let label = labelRender.addCss3DLabel(html, position, fontSize)
+      const { html, fontSize = '14px', position, rotation, name } = item
+      let label = labelRender.addCss3DLabel(name, html, position, fontSize)
       label.rotation.set(rotation.x, rotation.y, rotation.z)
       return
     })
@@ -33,8 +31,8 @@ export const renderLabel = (type, viewer, labelData = []) => {
   // 3DSprite
   if (type === '3DSprite') {
     labelData.map(item => {
-      const { html, fontSize = '14px', position } = item
-      labelRender.addCss3DSprite(html, position, fontSize)
+      const { html, fontSize = '14px', position, name } = item
+      labelRender.addCss3DSprite(name, html, position, fontSize)
       return
     })
   }
@@ -75,7 +73,15 @@ export const drawSquareArea = (viewer, squareData = []) => {
 export const drawTexture = (viewer, textureData = []) => {
   if (!textureData.length) return
   textureData.map(item => {
-    const { textureKey, geomery, imgUrl, uvOffset, repeat, rotation, position } = item
+    const {
+      textureKey,
+      geomery,
+      imgUrl,
+      uvOffset,
+      repeat,
+      rotation,
+      position,
+    } = item
     let texture = viewer.addTextureLoader(textureKey, imgUrl, uvOffset)
     texture.repeat.set(repeat.x, repeat.y) //注意选择合适的阵列数量
     const material = new THREE.LineBasicMaterial({
@@ -98,21 +104,21 @@ export const drawTexture = (viewer, textureData = []) => {
 export const drawPlane = (viewer, planeData) => {
   if (!planeData.length) return
   planeData.forEach(item => {
-    const { name, color, points, rotation, position } = item
-    let pointA = new THREE.Vector3(...points[0]);
-    let pointB = new THREE.Vector3(...points[1]);
-    let pointC = new THREE.Vector3(...points[2]);
+    const { name, color, points, rotation = {}, position = {} } = item
+    let pointA = new THREE.Vector3(...points[0])
+    let pointB = new THREE.Vector3(...points[1])
+    let pointC = new THREE.Vector3(...points[2])
     // 使用distanceTo()方法计算两点之间的距离
-    let distanceAB = pointA.distanceTo(pointB).toFixed(6);
-    let distanceBC = pointB.distanceTo(pointC).toFixed(6);
+    let distanceAB = pointA.distanceTo(pointB).toFixed(6)
+    let distanceBC = pointB.distanceTo(pointC).toFixed(6)
     let width = distanceAB > distanceBC ? distanceBC : distanceAB
     let length = distanceAB > distanceBC ? distanceAB : distanceBC
-    const geometry = new THREE.PlaneGeometry(length, width);
+    const geometry = new THREE.PlaneGeometry(length, width)
     const material = new THREE.MeshBasicMaterial({ color })
     const mesh = new THREE.Mesh(geometry, material)
     mesh.name = name // 增加模型唯一标识,方便模型操作
-    mesh.rotation.set(rotation.x, rotation.y, rotation.z)
-    mesh.position.set(position.x, position.y, position.z)
+    mesh.rotation.set(rotation.x || 0, rotation.y || 0, rotation.z || 0)
+    mesh.position.set(position.x || 0, position.y || 0, position.z || 0)
     viewer.scene.add(mesh)
-  });
+  })
 }
