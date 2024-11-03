@@ -63,7 +63,8 @@ export const labelData = [
           </div>`,
   },
   {
-    position: { x: -98, y: 0, z: -145 },
+    name: 'AGV空载具区LES',
+    position: { x: -85, y: 0, z: -132 },
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
     html: `<div style="border:1px solid #fff; padding:8px;letter-spacing: 5px;text-align:center">
             <div style="margin-bottom:5px">AGV空载具区</div>
@@ -71,7 +72,8 @@ export const labelData = [
           </div>`,
   },
   {
-    position: { x: 118, y: 0, z: -355 },
+    name: 'AGV库区',
+    position: { x: 120, y: 0, z: -353 },
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
     html: `<div style="border:1px solid #fff; padding:8px;letter-spacing: 2px;">AGV库区</div>`,
   },
@@ -142,6 +144,20 @@ export const labelData = [
     position: { x: 838, y: 0, z: -1118 },
     rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
     html: `<div style="border:1px solid #fff; padding:16px;letter-spacing: 2px;">EPS线</div>`,
+  },
+  {
+    name: '1号电梯-门牌',
+    color: '#000000',
+    position: { x: -423, y: 100, z: 130 },
+    rotation: { x: 0, y: Math.PI / 4, z: 0 },
+    html: `<div style="letter-spacing: 2px;">1号电梯</div>`,
+  },
+  {
+    name: '2号电梯-门牌',
+    color: '#000000',
+    position: { x: -502, y: 100, z: 202 },
+    rotation: { x: 0, y: Math.PI / 4, z: 0 },
+    html: `<div style="letter-spacing: 2px;">2号电梯</div>`,
   },
 ]
 
@@ -340,6 +356,36 @@ export const textureData = [
     repeat: { x: 10, y: 1 },
     rotation: { x: -Math.PI / 2, y: 0, z: -(Math.PI * 3) / 4 },
     position: { x: 36, y: 1, z: 280 },
+  },
+]
+
+export const textureData_9 = [
+  {
+    textureKey: 'textureData_9-1',
+    imgUrl: rightUrl,
+    geomery: [750, 15],
+    uvOffset: -0.05,
+    repeat: { x: 50, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI * 3 / 4 },
+    position: { x: -135, y: 1, z: -135 },
+  },
+  {
+    textureKey: 'textureData_9-2',
+    imgUrl: rightUrl,
+    geomery: [250, 15],
+    uvOffset: -0.05,
+    repeat: { x: 15, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI * 3 / 4 },
+    position: { x: -500, y: 135.5, z: 230 },
+  },
+  {
+    textureKey: 'textureData_9-3',
+    imgUrl: rightUrl,
+    geomery: [150, 15],
+    uvOffset: -0.05,
+    repeat: { x: 8, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
+    position: { x: -545, y: 135.5, z: 370 },
   },
 ]
 
@@ -817,7 +863,7 @@ export const actionDetailData = {
 export const planeData = [
   {
     name: '二楼横面',
-    color: '#808080',
+    color: '#051826',
     position: { x: -518, y: 135, z: 212 },
     rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
     points: [
@@ -828,7 +874,7 @@ export const planeData = [
   },
   {
     name: '二楼竖面',
-    color: '#808080',
+    color: '#051826',
     position: { x: -483, y: 135, z: 460 },
     rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
     points: [
@@ -840,7 +886,7 @@ export const planeData = [
   {
     name: 'wall-up-1',
     color: '#54989f',
-    position: { x: 249, y: 0, z: -505 },
+    position: { x: 249, y: 5, z: -505 },
     rotation: { x: 0, y: -Math.PI / 4, z: 0 },
     points: [
       [353.539393, 0, -400.707811],
@@ -851,7 +897,7 @@ export const planeData = [
   {
     name: 'wall-up-2',
     color: '#54989f',
-    position: { x: 490, y: 0, z: -265 },
+    position: { x: 489, y: 5, z: -265 },
     rotation: { x: 0, y: -Math.PI / 4, z: 0 },
     points: [
       [565.680445, 0, -188.55723],
@@ -862,13 +908,56 @@ export const planeData = [
   {
     name: 'wall-up-3',
     color: '#54989f',
-    // color: '#8c9fbf',
-    position: { x: 156, y: 0, z: -607 },
+    position: { x: 152.49, y: 30, z: -601.51 },
     rotation: { x: 0, y: -Math.PI / 4, z: 0 },
     points: [
       [159.991442, 0, -594.255761],
       [164.991442, 0, -589.255761],
       [164.991442, 60, -589.255761],
     ],
+  },
+  {
+    name: 'wall-up-4',
+    color: '#54989f',
+    position: { x: 574, y: 30, z: -180 },
+    rotation: { x: 0, y: -Math.PI / 4, z: 0 },
+    points: [
+      [159.991442, 0, -594.255761],
+      [164.991442, 0, -589.255761],
+      [164.991442, 60, -589.255761],
+    ],
+  },
+  {
+    name: 'wall-up-5',
+    color: '#54989f',
+    position: { x: 363.25, y: 65, z: -390.75 },
+    rotation: { x: 0, y: -Math.PI / 4, z: 0 },
+    points: [
+      [149.911979, 0, -604.335225],
+      [576.422459, 0, -177.824745],
+      [576.422459, 10, -177.824745],
+    ],
+  },
+]
+
+// 电梯数据
+export const stairData = [
+  {
+    name: '1号电梯',
+    stairColor: '#C0C0C0',
+    insideColor: '#e0ffff',
+    stairGeo: { x: 60, y: 200, z: 60 },
+    insideGeo: { x: 55, y: 60, z: 55 },
+    position: { x: -445, y: 100, z: 110 },
+    rotation: { x: 0, y: Math.PI / 4, z: 0 },
+  },
+  {
+    name: '2号电梯',
+    stairColor: '#C0C0C0',
+    insideColor: '#e0ffff',
+    stairGeo: { x: 60, y: 200, z: 60 },
+    insideGeo: { x: 55, y: 60, z: 55 },
+    position: { x: -520, y: 100, z: 185 },
+    rotation: { x: 0, y: Math.PI / 4, z: 0 },
   },
 ]

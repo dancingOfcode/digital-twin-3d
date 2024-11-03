@@ -26,10 +26,10 @@ export default class LabelRender {
    * @param {String} name 标签名称
    * @param {Object} position 标签渲染位置
    */
-  addCss2DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
+  addCss2DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'
-    div.style.color = '#fff'
+    div.style.color = color || '#fff'
     div.innerHTML = html
     const css2DLabel = new CSS2DObject(div) // HTML元素转化为threejs的CSS2模型对象
     css2DLabel.name = name
@@ -58,12 +58,12 @@ export default class LabelRender {
    * @param {Object} position 标签渲染位置
    * @param {String} fontSize 字体大小
    */
-  addCss3DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
+  addCss3DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'
     div.style.pointerEvents = 'none'
-    div.style.color = '#fff'
+    div.style.color = color || '#fff'
     div.innerHTML = html
     const css3DLabel = new CSS3DObject(div) // HTML元素转化为threejs的CSS3模型对象
     css3DLabel.name = name
@@ -79,12 +79,12 @@ export default class LabelRender {
    * @param {String} name 标签名称
    * @param {Object} position 标签渲染位置
    */
-  addCss3DSprite(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize) {
+  addCss3DSprite(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'
     div.style.pointerEvents = 'none'
-    div.style.color = '#fff'
+    div.style.color = color || '#fff'
     div.innerHTML = html
     const css3DSprite = new CSS3DSprite(div) // HTML元素转化为threejs的CSS3精灵模型`CSS3DSprite`
     css3DSprite.name = name

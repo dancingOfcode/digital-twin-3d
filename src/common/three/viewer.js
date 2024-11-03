@@ -5,12 +5,11 @@
  */
 import {
   Scene,
-  Object3D,
-  PerspectiveCamera,
   WebGLRenderer,
   TextureLoader,
   RepeatWrapping,
   SRGBColorSpace,
+  PerspectiveCamera,
   AxesHelper,
   Vector2,
   Cache,
@@ -111,7 +110,6 @@ export default class Viewer {
     this.camera.aspect = window.innerWidth / window.innerHeight // 摄像机视锥体的长宽比，通常是使用画布的宽/画布的高
     this.camera.updateProjectionMatrix() // 更新摄像机投影矩阵 在任何参数被改变以后必须被调用,来使得这些改变生效
     this.renderer.setSize(window.innerWidth, window.innerHeight) // 设置渲染器的尺寸
-    this.renderer.setPixelRatio(window.devicePixelRatio) // 设置渲染器的像素比
     this.css3DRenderer.setSize(width, height) // 设置标签渲染器的尺寸
   }
 
@@ -158,7 +156,7 @@ export default class Viewer {
       10000,
     )
     // 相机位置
-    this.camera.position.set(500, 600, 500)
+    this.camera.position.set(550, 400, 550)
     // 相机观看方向 坐标原点
     this.camera.lookAt(0, 0, 0)
   }
@@ -244,7 +242,8 @@ export default class Viewer {
    * @param {String} tweenKey 动画唯一标识，用于tweenAnimateList移出动画
    * @param {Object} coords 动画初始状态
    * @param {Object} end 动画终点状态
-   * @param {Object} time 动画耗时
+   * @param {Number} time 动画耗时
+   * @param {Number} dedelay 延时执行
    * @param {Function} updateCallBack 动画更新回调
    */
   addTweenAnimate = (
@@ -252,6 +251,7 @@ export default class Viewer {
     coords = { x: 0, y: 0, z: 0 },
     end = { x: 0, y: 0, z: 0 },
     time,
+    dedelay,
     updateCallBack,
   ) => {
     let tweenAnimate = new Tween(coords, false) // Create a new tween that modifies 'coords'.
@@ -262,11 +262,12 @@ export default class Viewer {
           updateCallBack()
         }
       })
-      .start()
+      .start(dedelay)
     this.tweenAnimateList.push({
       tweenKey,
       tween: tweenAnimate,
     })
+    return tweenAnimate
   }
 
   /**
@@ -374,7 +375,6 @@ export default class Viewer {
     if (!modelNames.length) return
     modelNames.forEach(name => {
       let model = this.scene.getObjectByName(name)
-      console.log('model', model)
       if (!model.isMesh) return
       this.scene.remove(model);
       model.geometry.dispose();
