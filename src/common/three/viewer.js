@@ -243,7 +243,7 @@ export default class Viewer {
    * @param {Object} coords 动画初始状态
    * @param {Object} end 动画终点状态
    * @param {Number} time 动画耗时
-   * @param {Number} dedelay 延时执行
+   * @param {Number} delay 延时执行
    * @param {Function} updateCallBack 动画更新回调
    */
   addTweenAnimate = (
@@ -251,7 +251,7 @@ export default class Viewer {
     coords = { x: 0, y: 0, z: 0 },
     end = { x: 0, y: 0, z: 0 },
     time,
-    dedelay,
+    delay,
     updateCallBack,
   ) => {
     let tweenAnimate = new Tween(coords, false) // Create a new tween that modifies 'coords'.
@@ -262,7 +262,7 @@ export default class Viewer {
           updateCallBack()
         }
       })
-      .start(dedelay)
+      .start(delay)
     this.tweenAnimateList.push({
       tweenKey,
       tween: tweenAnimate,

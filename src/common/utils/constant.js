@@ -359,6 +359,38 @@ export const textureData = [
   },
 ]
 
+// action2
+export const textureData_3 = [
+  {
+    textureKey: 'textureData_3-1',
+    imgUrl: rightUrl,
+    geomery: [100, 15],
+    uvOffset: -0.05,
+    repeat: { x: 5, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI * 3 / 4 },
+    position: { x: -282, y: 1, z: 178 },
+  },
+  {
+    textureKey: 'textureData_3-2',
+    imgUrl: rightUrl,
+    geomery: [150, 15],
+    uvOffset: -0.05,
+    repeat: { x: 5, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
+    position: { x: -275, y: 1, z: 90 },
+  },
+  {
+    textureKey: 'textureData_3-3',
+    imgUrl: rightUrl,
+    geomery: [150, 15],
+    uvOffset: -0.05,
+    repeat: { x: 5, y: 1 },
+    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI / 4 },
+    position: { x: -170, y: 1, z: 80 },
+  },
+]
+
+// action9
 export const textureData_9 = [
   {
     textureKey: 'textureData_9-1',
