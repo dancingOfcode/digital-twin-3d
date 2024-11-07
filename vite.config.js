@@ -13,7 +13,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler', // 启用新版API
+        api: 'modern-compiler', // 启用scss新版API
         additionalData: '@use "@/assets/utils.scss" as *;', // !一定要将其他地方引入该css文件的地方删除，如index.html,否则会提示已经加载该module的错误！！！
       },
     },
