@@ -25,10 +25,11 @@ export default class DirectionalLight {
   setOption(option = {}) {
     this.light.intensity = option.intensity || 2 // 光线强度
     this.light.castShadow = option.castShadow || true // 是否有阴影
+    // 阴影像素
     this.light.shadow.mapSize.set(
       option.mapSize || 2048,
       option.mapSize || 2048,
-    ) // 阴影像素
+    )
     // 阴影范围
     const d = 80
     this.light.shadow.camera.left = -d

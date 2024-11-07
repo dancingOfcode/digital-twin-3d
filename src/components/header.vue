@@ -6,7 +6,6 @@ import { weekDay } from '@/common/utils/constant'
 
 const props = defineProps(['title'])
 const { isFullScreen, toggleFullScreen } = useFullScreen()
-
 const timeRef = ref(dayjs().format('YYYY-MM-DD'))
 const dayWeek = ref(weekDay[dayjs().day()])
 const timeRefhms = ref(dayjs().format('HH:mm:ss'))
@@ -24,70 +23,73 @@ setInterval(() => {
       <span>{{ dayWeek }}</span>
     </div>
     <div class="screen-wrap">
-      <div class="screen-btn" :class="isFullScreen ? 'exit-icon' : 'full-icon'" @click="toggleFullScreen"></div>
+      <div
+        class="screen-btn"
+        :class="isFullScreen ? 'exit-icon' : 'full-icon'"
+        @click="toggleFullScreen"
+      ></div>
       <span>{{ isFullScreen ? '退出全屏' : '全屏' }}</span>
     </div>
   </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .screen-header {
   position: absolute;
   left: 0;
   top: 0;
+  display: flex;
   z-index: 99;
   width: 100%;
-  height: 100px;
-  height: 100px;
+  height: vh(100);
   color: #fff;
-  line-height: 100px;
-  display: flex;
+  line-height: vh(100);
   align-items: center;
   justify-content: center;
   background: url('@/assets//images/header_bg.png') no-repeat;
   background-size: 100% 100%;
-}
 
-.title {
-  font-size: 30px;
-  position: relative;
-  top: -10px;
-}
+  .title {
+    font-size: vw(30);
+    position: relative;
+    top: vh(-10);
+  }
 
-.screen-wrap {
-  display: flex;
-  justify-self: center;
-  align-items: center;
-  position: absolute;
-  top: 16px;
-  left: 12px;
-  z-index: 999;
-  cursor: pointer;
-  height: 32px;
-}
+  .date {
+    position: absolute;
+    right: vw(24);
+    top: vh(-6);
 
-.screen-btn {
-  width: 30px;
-  height: 24px;
-}
+    .time-hms {
+      margin: 0 vw(16);
+      font-size: vw(24);
+    }
+  }
 
-.full-icon {
-  background: url('@/assets/images/fullScreen.png') no-repeat;
-  background-size: 100% 100%;
-}
+  .screen-wrap {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    position: absolute;
+    top: vh(16);
+    left: vw(12);
+    z-index: 999;
+    cursor: pointer;
+    height: vh(32);
 
-.exit-icon {
-  background: url('@/assets/images/exitFullScreen.png') no-repeat;
-  background-size: 100% 100%;
-}
+    .screen-btn {
+      width: vw(30);
+      height: vh(24);
+    }
 
-.date {
-  position: absolute;
-  right: 24px;
-  top: -6px;
-}
+    .full-icon {
+      background: url('@/assets/images/fullScreen.png') no-repeat;
+      background-size: 100% 100%;
+    }
 
-.time-hms {
-  margin: 0 16px;
-  font-size: 24px;
+    .exit-icon {
+      background: url('@/assets/images/exitFullScreen.png') no-repeat;
+      background-size: 100% 100%;
+    }
+  }
 }
 </style>

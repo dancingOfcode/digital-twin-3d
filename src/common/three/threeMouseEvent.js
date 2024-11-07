@@ -5,10 +5,8 @@
  * @param {Function} succCallback  成功回调函数
  * @param {Function} failCallback  失败回调函数
  * @param {String} type 鼠标事件类型
- * @returns
  */
 import * as THREE from 'three'
-
 export default class ThreeMouseEvent {
   constructor(viewer, succCallback, failCallback, type = 'click') {
     this.type = type

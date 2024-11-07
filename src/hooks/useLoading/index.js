@@ -1,3 +1,8 @@
+/**
+ * @description 全屏 loading 加载中状态
+ * @author xu.zhengyou
+ * @returns {Object}
+ */
 import { ref } from 'vue'
 import useBoolean from '@/hooks/useBoolean'
 

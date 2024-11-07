@@ -87,7 +87,6 @@ export default class Lights {
   /**
    * 移除灯光
    * @param {Object} light 灯光
-   * @returns {Object} 光源
    */
   removeLight(light) {
     this.viewer.scene.remove(light)

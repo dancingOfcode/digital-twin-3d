@@ -1,3 +1,9 @@
+/**
+ * @description 布尔值
+ * @author xu.zhengyou
+ * @param {boolean} defaultValue 默认 false
+ * @returns {Object}
+ */
 import { ref } from 'vue'
 
 function useBoolean(defaultValue = false) {

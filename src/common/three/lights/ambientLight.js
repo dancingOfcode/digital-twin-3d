@@ -4,7 +4,6 @@
  * @param {Object} viewer 视图
  */
 import * as THREE from 'three'
-
 export default class AmbientLight {
   constructor(viewer, option = { color: 0x404040 }) {
     this.light = new THREE.AmbientLight(new THREE.Color(option.color)) // 柔和的白光

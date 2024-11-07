@@ -2,7 +2,7 @@
  * @description 渲染标签 支持：2D标签 3D标签 精灵模型
  * @author xu.zhengyou
  * @param {Object} position 标签渲染位置 默认坐标原点
- * @param {String} html dom内容
+ * @param {String} html dom节点内容
  */
 import { Mesh } from 'three'
 import {
@@ -14,7 +14,6 @@ import {
   CSS3DObject,
   CSS3DSprite,
 } from 'three/examples/jsm/renderers/CSS3DRenderer' // CSS3模型对象CSS3DObject CSS3精灵模型
-
 export default class LabelRender {
   constructor(viewer) {
     this.viewer = viewer
@@ -25,8 +24,15 @@ export default class LabelRender {
    * @param {String} html dom内容
    * @param {String} name 标签名称
    * @param {Object} position 标签渲染位置
+   * @returns {Object}
    */
-  addCss2DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
+  addCss2DLabel(
+    name,
+    html = '',
+    position = { x: 0, y: 0, z: 0 },
+    fontSize,
+    color,
+  ) {
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'
     div.style.color = color || '#fff'
@@ -36,11 +42,10 @@ export default class LabelRender {
     css2DLabel.position.set(position.x, position.y, position.z)
     const css2Renderer = new CSS2DRenderer(css2DLabel) // 创建一个CSS2渲染器CSS2DRenderer
     css2Renderer.render(this.viewer.scene, this.viewer.camera) // 用法和webgl渲染器渲染方法类似
-    // width, height：canvas画布宽高度
     css2Renderer.setSize(
       this.viewer.viewerDom.offsetWidth,
       this.viewer.viewerDom.offsetHeight,
-    )
+    ) // width, height：canvas画布宽高度
     this.viewer.viewerDom.appendChild(css2Renderer.domElement)
     // 属性设置
     css2Renderer.domElement.style.position = 'absolute'
@@ -57,8 +62,15 @@ export default class LabelRender {
    * @param {String} name 标签名称
    * @param {Object} position 标签渲染位置
    * @param {String} fontSize 字体大小
+   * @returns {Object}
    */
-  addCss3DLabel(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
+  addCss3DLabel(
+    name,
+    html = '',
+    position = { x: 0, y: 0, z: 0 },
+    fontSize,
+    color,
+  ) {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'
@@ -78,8 +90,15 @@ export default class LabelRender {
    * @param {String} html dom内容
    * @param {String} name 标签名称
    * @param {Object} position 标签渲染位置
+   * @returns {Object}
    */
-  addCss3DSprite(name, html = '', position = { x: 0, y: 0, z: 0 }, fontSize, color) {
+  addCss3DSprite(
+    name,
+    html = '',
+    position = { x: 0, y: 0, z: 0 },
+    fontSize,
+    color,
+  ) {
     const mesh = new Mesh()
     const div = document.createElement('div')
     div.style.fontSize = fontSize || '14px'

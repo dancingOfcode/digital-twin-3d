@@ -196,6 +196,7 @@ export default class Viewer {
       fun: this.updateStatus,
       content: this.stats,
     }
+    this.stats.dom.style.top = '60px'
     this.viewerDom.appendChild(this.stats.dom) // stats.dom:web页面上输出计算结果,一个div元素
     this.addAnimate(this.statsObj)
   }
@@ -251,18 +252,18 @@ export default class Viewer {
     coords = { x: 0, y: 0, z: 0 },
     end = { x: 0, y: 0, z: 0 },
     time,
-    delay,
+    delay = 0,
     updateCallBack,
   ) => {
     let tweenAnimate = new Tween(coords, false) // Create a new tween that modifies 'coords'.
       .to(end, time)
       .easing(Easing.Quadratic.InOut)
+      .delay(delay)
       .onUpdate(() => {
         if (typeof updateCallBack === 'function') {
           updateCallBack()
         }
       })
-      .start(delay)
     this.tweenAnimateList.push({
       tweenKey,
       tween: tweenAnimate,
@@ -368,19 +369,19 @@ export default class Viewer {
   }
 
   /**
- * @description 清除模型 
- * @param { Array} modelNames 模型名称 
- */
+   * @description 清除模型
+   * @param { Array} modelNames 模型名称
+   */
   removeModel(modelNames = []) {
     if (!modelNames.length) return
     modelNames.forEach(name => {
       let model = this.scene.getObjectByName(name)
       if (!model.isMesh) return
-      this.scene.remove(model);
-      model.geometry.dispose();
+      this.scene.remove(model)
+      model.geometry.dispose()
       if (model.material) {
-        model.material.dispose();
+        model.material.dispose()
       }
-    });
+    })
   }
 }

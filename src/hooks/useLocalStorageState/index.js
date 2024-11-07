@@ -1,3 +1,10 @@
+/**
+ * @description 全屏 loading 加载中状态
+ * @author xu.zhengyou
+ * @param key 标识
+ * @param options 存贮对象
+ * @returns {Object}
+ */
 import { isFunction } from 'lodash'
 import { ref, watch } from 'vue'
 
@@ -34,7 +41,6 @@ function useLocalStorageState(key, options) {
   watch(
     state,
     () => {
-      // @ts-ignore
       storage?.setItem(key, serializer(state.value))
     },
     {

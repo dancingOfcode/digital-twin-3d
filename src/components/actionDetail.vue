@@ -7,77 +7,83 @@ const props = defineProps({
 </script>
 <template>
   <div class="action-detail" v-if="actionDetailData[currentIndex]">
-    <img alt="" class="close_icon" src="@/assets/images/close_icon.png" @click="$emit('closePop')" />
+    <img
+      alt=""
+      class="close_icon"
+      src="@/assets/images/close_icon.png"
+      @click="$emit('closePop')"
+    />
     <div class="title">{{ actionDetailData[currentIndex]?.title }}</div>
     <div class="section">
-      <div class="section-item" :key="index" v-for="(item, index) in actionDetailData[currentIndex].actions">
+      <div
+        class="section-item"
+        :key="index"
+        v-for="(item, index) in actionDetailData[currentIndex].actions"
+      >
         <div class="name">{{ index + 1 + `. ` + item.name }}</div>
         <div class="html" v-html="item.html"></div>
       </div>
     </div>
   </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .action-detail {
   position: absolute;
-  right: 24px;
+  right: vw(24);
   top: 18vh;
   color: #fff;
-  width: 372px;
-  padding: 24px 12px;
+  width: vw(372);
   max-height: 72vh;
   min-height: 38vh;
   overflow: hidden;
+  padding: vw(24) vh(12);
   background: url('@/assets/images/pop_bg.png') no-repeat;
   background-size: 100% 100%;
-}
 
-.close_icon {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-}
+  .close_icon {
+    position: absolute;
+    top: vh(8);
+    right: vw(12);
+    width: vw(28);
+    height: vh(28);
+    cursor: pointer;
+  }
 
-.title {
-  width: 100%;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-}
+  .title {
+    width: 100%;
+    font-size: vw(24);
+    font-weight: bold;
+    text-align: center;
+  }
 
-.name {
-  width: 100%;
-  font-size: 22px;
-  margin: 24px 0 12px;
-  padding: 0 12px 8px 16px;
-  box-sizing: border-box;
-  background: url('@/assets/images/item_bg.png') no-repeat;
-  background-size: 100% 100%;
-}
+  .section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 68vh;
 
-.html {
-  line-height: 28px;
-  padding-left: 16px;
-}
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
 
-.html div {
-  margin-bottom: 12px;
-}
+    &::-webkit-scrollbar-thumb {
+      background: #00b2df;
+    }
 
-.section {
-  font-size: 20px;
-  overflow-y: auto;
-  max-height: 68vh;
-}
+    .name {
+      width: 100%;
+      font-size: vw(22);
+      margin: vw(24) 0 vh(12);
+      padding: 0 vw(12) vh(8) vw(16);
+      background: url('@/assets/images/item_bg.png') no-repeat;
+      background-size: 100% 100%;
+    }
 
-.section::-webkit-scrollbar {
-  width: 3px;
-}
-
-.section::-webkit-scrollbar-thumb {
-  background: #00b2df;
+    .html {
+      font-size: vw(20);
+      line-height: vh(32);
+      padding-left: vw(16);
+      letter-spacing: vw(1);
+    }
+  }
 }
 </style>

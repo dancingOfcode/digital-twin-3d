@@ -23,7 +23,13 @@ export const renderLabel = (type, viewer, labelData = []) => {
   if (type === '3DLabel') {
     labelData.map(item => {
       const { html, fontSize = '14px', position, rotation, name, color } = item
-      let label = labelRender.addCss3DLabel(name, html, position, fontSize, color)
+      let label = labelRender.addCss3DLabel(
+        name,
+        html,
+        position,
+        fontSize,
+        color,
+      )
       label.rotation.set(rotation.x, rotation.y, rotation.z)
       return
     })
@@ -114,7 +120,10 @@ export const drawPlane = (viewer, planeData) => {
     let width = distanceAB > distanceBC ? distanceBC : distanceAB
     let length = distanceAB > distanceBC ? distanceAB : distanceBC
     const geometry = new THREE.PlaneGeometry(length, width)
-    const material = new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide })
+    const material = new THREE.MeshBasicMaterial({
+      color,
+      side: THREE.DoubleSide,
+    })
     const mesh = new THREE.Mesh(geometry, material)
     mesh.name = name // 增加模型唯一标识,方便模型操作
     mesh.rotation.set(rotation.x || 0, rotation.y || 0, rotation.z || 0)
@@ -124,36 +133,56 @@ export const drawPlane = (viewer, planeData) => {
 }
 
 /**
- * 
+ * 绘制电梯
  * @param {Object} viewer 视图
  * @param {Array} stairData ,
  */
 export const drawStair = (viewer, stairData = []) => {
   if (!stairData.length) return
   stairData.forEach(item => {
-    const { name, stairColor, insideColor, stairGeo, insideGeo, rotation, position } = item
+    const {
+      name,
+      stairColor,
+      insideColor,
+      stairGeo,
+      insideGeo,
+      rotation,
+      position,
+    } = item
     // 创建电梯
-    const stairGeometry = new THREE.BoxGeometry(stairGeo.x || 12, stairGeo.y || 12, stairGeo.z || 12);
+    const stairGeometry = new THREE.BoxGeometry(
+      stairGeo.x || 12,
+      stairGeo.y || 12,
+      stairGeo.z || 12,
+    )
     const stairMaterial = new THREE.MeshBasicMaterial({
       color: stairColor,
-      opacity: 0.5,//透明度
-      transparent: true,//允许透明
-    });
-    const stair = new THREE.Mesh(stairGeometry, stairMaterial);
+      opacity: 0.5, //透明度
+      transparent: true, //允许透明
+    })
+    const stair = new THREE.Mesh(stairGeometry, stairMaterial)
     stair.name = name
-    stair.position.set(position.x || 0, position.y || 0, position.z || 0);
-    stair.rotation.set(rotation.x || 0, rotation.y || Math.PI / 4, rotation.z || 0);
-    viewer.scene.add(stair);
+    stair.position.set(position.x || 0, position.y || 0, position.z || 0)
+    stair.rotation.set(
+      rotation.x || 0,
+      rotation.y || Math.PI / 4,
+      rotation.z || 0,
+    )
+    viewer.scene.add(stair)
     // 创建电梯的内部
-    const insideGeometry = new THREE.BoxGeometry(insideGeo.x || 10, insideGeo.y || 10, insideGeo.z || 10);
+    const insideGeometry = new THREE.BoxGeometry(
+      insideGeo.x || 10,
+      insideGeo.y || 10,
+      insideGeo.z || 10,
+    )
     const insideMaterial = new THREE.MeshBasicMaterial({
       color: insideColor,
-      opacity: 0.6,//透明度
-      transparent: true,//允许透明
-    });
-    const inside = new THREE.Mesh(insideGeometry, insideMaterial);
+      opacity: 0.6, //透明度
+      transparent: true, //允许透明
+    })
+    const inside = new THREE.Mesh(insideGeometry, insideMaterial)
     inside.name = `${name}-inside`
-    inside.position.set(0, -(stairGeo.y - insideGeo.y) / 2, 0);
-    stair.add(inside);
+    inside.position.set(0, -(stairGeo.y - insideGeo.y) / 2, 0)
+    stair.add(inside)
   })
 }

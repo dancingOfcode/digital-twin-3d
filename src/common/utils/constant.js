@@ -303,33 +303,33 @@ export const squareData = [
 
 // agv路线数据
 export const textureData = [
-  {
-    textureKey: 'rightLoad-1',
-    imgUrl: rightUrl,
-    geomery: [210, 15],
-    uvOffset: -0.05,
-    repeat: { x: 10, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
-    position: { x: -203, y: 1, z: 56 },
-  },
-  {
-    textureKey: 'rightLoad-2',
-    imgUrl: rightUrl,
-    geomery: [600, 15],
-    uvOffset: -0.05,
-    repeat: { x: 25, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
-    position: { x: -75, y: 1, z: -230 },
-  },
-  {
-    textureKey: 'rightLoad-3',
-    imgUrl: rightUrl,
-    geomery: [80, 15],
-    uvOffset: -0.05,
-    repeat: { x: 5, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
-    position: { x: 120, y: 1, z: -470 },
-  },
+  // {
+  //   textureKey: 'rightLoad-1',
+  //   imgUrl: rightUrl,
+  //   geomery: [210, 15],
+  //   uvOffset: -0.05,
+  //   repeat: { x: 10, y: 1 },
+  //   rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
+  //   position: { x: -203, y: 1, z: 56 },
+  // },
+  // {
+  //   textureKey: 'rightLoad-2',
+  //   imgUrl: rightUrl,
+  //   geomery: [600, 15],
+  //   uvOffset: -0.05,
+  //   repeat: { x: 25, y: 1 },
+  //   rotation: { x: -Math.PI / 2, y: 0, z: Math.PI / 4 },
+  //   position: { x: -75, y: 1, z: -230 },
+  // },
+  // {
+  //   textureKey: 'rightLoad-3',
+  //   imgUrl: rightUrl,
+  //   geomery: [80, 15],
+  //   uvOffset: -0.05,
+  //   repeat: { x: 5, y: 1 },
+  //   rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
+  //   position: { x: 120, y: 1, z: -470 },
+  // },
   {
     textureKey: 'leftLoad-1',
     imgUrl: leftUrl,
@@ -359,7 +359,7 @@ export const textureData = [
   },
 ]
 
-// action2
+// action3
 export const textureData_3 = [
   {
     textureKey: 'textureData_3-1',
@@ -367,7 +367,7 @@ export const textureData_3 = [
     geomery: [100, 15],
     uvOffset: -0.05,
     repeat: { x: 5, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: Math.PI * 3 / 4 },
+    rotation: { x: -Math.PI / 2, y: 0, z: (Math.PI * 3) / 4 },
     position: { x: -282, y: 1, z: 178 },
   },
   {
@@ -398,7 +398,7 @@ export const textureData_9 = [
     geomery: [750, 15],
     uvOffset: -0.05,
     repeat: { x: 50, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI * 3 / 4 },
+    rotation: { x: -Math.PI / 2, y: 0, z: (-Math.PI * 3) / 4 },
     position: { x: -135, y: 1, z: -135 },
   },
   {
@@ -407,7 +407,7 @@ export const textureData_9 = [
     geomery: [250, 15],
     uvOffset: -0.05,
     repeat: { x: 15, y: 1 },
-    rotation: { x: -Math.PI / 2, y: 0, z: -Math.PI * 3 / 4 },
+    rotation: { x: -Math.PI / 2, y: 0, z: (-Math.PI * 3) / 4 },
     position: { x: -500, y: 135.5, z: 230 },
   },
   {

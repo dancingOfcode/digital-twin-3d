@@ -27,70 +27,80 @@ const itemClick = index => {
 </script>
 <template>
   <div class="detail-actions-wrap">
-    <img alt="" class="close_icon" src="@/assets/images/close_icon.png" @click="$emit('closePop')" />
+    <img
+      alt=""
+      class="close_icon"
+      src="@/assets/images/close_icon.png"
+      @click="$emit('closePop')"
+    />
     <div class="detail-actions">
-      <div v-for="(item, index) in actionTextData[currentTab]" :key="index"
-        :class="['item', { 'active-item': currentIndex === index + 1 }]" @click="itemClick(index + 1)">
-        <i> {{ (currentTab === 'detailActions' ? '1.' : '2.') + (index + 1) }}</i>
+      <div
+        v-for="(item, index) in actionTextData[currentTab]"
+        :key="index"
+        :class="['item', { 'active-item': currentIndex === index + 1 }]"
+        @click="itemClick(index + 1)"
+      >
+        <i>
+          {{ (currentTab === 'detailActions' ? '1.' : '2.') + (index + 1) }}</i
+        >
         <span class="text">{{ item }}</span>
       </div>
     </div>
   </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .detail-actions-wrap {
   position: absolute;
   top: 18vh;
-  left: 78px;
-  width: 372px;
+  left: vw(78);
+  width: vw(372);
   overflow: hidden;
   max-height: 72vh;
   min-height: 38vh;
-  padding: 42px 12px 12px;
+  padding: vw(42) vh(12) vw(12);
   background: url('@/assets/images/pop_bg.png') no-repeat;
   background-size: 100% 100%;
-}
 
-.close_icon {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-}
+  .close_icon {
+    position: absolute;
+    top: vh(8);
+    right: vw(12);
+    width: vw(28);
+    height: vh(28);
+    cursor: pointer;
+  }
 
-.detail-actions {
-  color: #fff;
-  overflow-y: auto;
-  max-height: 68vh;
-}
+  .detail-actions {
+    color: #fff;
+    overflow-y: auto;
+    max-height: 68vh;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
 
-.detail-actions::-webkit-scrollbar {
-  width: 0;
-}
+    .item {
+      cursor: pointer;
+      font-size: 24px;
+      padding: vh(8) vw(12);
+      margin-bottom: vh(5);
+      box-sizing: border-box;
 
-.item {
-  cursor: pointer;
-  font-size: 24px;
-  padding: 8px 12px;
-  margin-bottom: 5px;
-  box-sizing: border-box;
-}
+      &:hover {
+        border-radius: vw(5);
+        background: #327672;
+        border: 1px solid #00fcee;
+      }
 
-.text {
-  margin-left: 12px;
-}
+      &.active-item {
+        border-radius: vw(5);
+        background: #327672;
+        border: vw(1) solid #00fcee;
+      }
 
-.item:hover {
-  border-radius: 5px;
-  background: #327672;
-  border: 1px solid #00fcee;
-}
-
-.active-item {
-  border-radius: 5px;
-  background: #327672;
-  border: 1px solid #00fcee;
+      .text {
+        margin-left: vw(12);
+      }
+    }
+  }
 }
 </style>
